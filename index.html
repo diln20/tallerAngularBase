@@ -94,6 +94,25 @@
     .sidebar-tree small{display:block;color:var(--muted);line-height:1.4}
     .folder-state{border-color:color-mix(in srgb,var(--accent) 55%,var(--line))}
     .folder-state summary{color:var(--accent)}
+    .phase-banner{scroll-margin-top:24px;margin:38px 0 22px;padding:24px;border:1px solid color-mix(in srgb,var(--accent) 45%,var(--line));border-radius:22px;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 10%,var(--panel)),color-mix(in srgb,var(--accent2) 9%,var(--panel)));box-shadow:var(--shadow)}
+    .phase-kicker{font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+    .phase-banner h2{font-size:32px;margin:5px 0 8px}
+    .phase-banner p{margin:0;color:var(--muted);max-width:900px}
+    .phase-flow{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+    .phase-flow span{padding:7px 10px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);font-size:12px;font-weight:800}
+    .diagram-card{margin:18px 0;padding:18px;border:1px solid var(--line);border-radius:18px;background:var(--panel2);overflow:auto}
+    .diagram-card .diagram-title{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}
+    .diagram-card .diagram-title strong{font-size:15px}
+    .diagram-card .diagram-title small{color:var(--muted)}
+    .mermaid{display:flex;justify-content:center;min-width:620px}
+    .principles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}
+    .principle{padding:15px;border-radius:14px;border:1px solid var(--line);background:var(--panel2)}
+    .principle b{display:block;color:var(--accent);margin-bottom:4px}
+    .pattern-role{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+    .role-card{padding:18px;border-radius:16px;border:1px solid var(--line);background:var(--panel2)}
+    .role-card h4{margin:0 0 8px;color:var(--accent)}
+    .role-card ul{margin:8px 0 0;padding-left:20px}
+    .side-group{margin:14px 4px 5px;font-size:9px;font-weight:900;letter-spacing:.15em;color:var(--accent2);text-transform:uppercase}
     @media(max-width:980px){
       .layout{display:block}
       aside{display:block;position:fixed;z-index:50;left:0;top:0;width:min(88vw,330px);height:100vh;transform:translateX(-105%);transition:transform .22s ease;box-shadow:var(--shadow)}
@@ -101,7 +120,7 @@
       body.menu-open::after{content:'';position:fixed;z-index:40;inset:0;background:rgba(0,0,0,.48)}
       .mobile-top{display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:30;background:var(--panel);border-bottom:1px solid var(--line)}
       .hero-cards,.grid3{grid-template-columns:repeat(2,1fr)}
-      .grid2,.compare,.code-pair{grid-template-columns:1fr}
+      .grid2,.compare,.code-pair,.principles,.pattern-role{grid-template-columns:1fr}
     }
     @media(max-width:620px){
       .hero{padding:46px 20px 30px}
@@ -110,6 +129,7 @@
       .section{padding:18px}
     }
   </style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 </head>
 <body>
 <div class="mobile-top">
@@ -136,6 +156,9 @@
     <div class="sidebar-title">RECORRIDO</div>
     <nav class="nav">
       <a href="#inicio"><span class="num">00</span>Inicio</a>
+
+      <div class="side-group">Parte 1 · Base del proyecto</div>
+      <a href="#parte-base"><span class="num">A</span>Parte base</a>
       <a href="#reto-inicial-1"><span class="num">01</span>Ejecutar proyecto</a>
       <a href="#reto-inicial-2"><span class="num">02</span>Estructura y app-root</a>
       <a href="#reto-inicial-3"><span class="num">03</span>Data Binding</a>
@@ -146,10 +169,14 @@
       <a href="#reto2"><span class="num">08</span>Agregar estudiante</a>
       <a href="#reto3"><span class="num">09</span>Validaciones</a>
       <a href="#reto4"><span class="num">10</span>Editar / CRUD</a>
+
+      <div class="side-group">Parte 2 · Patrón de diseño</div>
+      <a href="#parte-patron"><span class="num">B</span>Container / Presentational</a>
       <a href="#reto5"><span class="num">11</span>Crear componente</a>
       <a href="#reto6"><span class="num">12</span>input()</a>
       <a href="#reto7"><span class="num">13</span>output()</a>
       <a href="#reto8"><span class="num">14</span>id + $event</a>
+
       <a href="#cierre"><span class="num">15</span>Reto final</a>
     </nav>
 
@@ -204,6 +231,49 @@
         </div>
       </section>
 
+      <section class="section">
+        <div class="mini-title">Conceptos transversales</div>
+        <h2>Conceptos que vamos a cuidar durante todo el proyecto</h2>
+        <div class="principles">
+          <div class="principle"><b>Tipado</b>TypeScript debe ayudarnos a detectar datos mal formados antes de ejecutar la aplicación.</div>
+          <div class="principle"><b>Responsabilidades</b>Un archivo o componente no debería encargarse de todo cuando el proyecto empieza a crecer.</div>
+          <div class="principle"><b>Nombres claros</b>Variables, métodos, componentes y carpetas deben explicar su intención.</div>
+          <div class="principle"><b>IDs estables</b>Los registros se identifican por su identidad, no por la posición momentánea del array.</div>
+          <div class="principle"><b>Reutilización</b>Cuando una parte visual se repite, evaluamos si merece convertirse en componente.</div>
+          <div class="principle"><b>Flujo de datos</b>Siempre debemos poder responder: ¿quién tiene el dato?, ¿quién lo modifica? y ¿quién solo lo muestra?</div>
+        </div>
+      </section>
+
+
+      <section class="phase-banner" id="parte-base">
+        <div class="phase-kicker">Parte 1 · Fundamentos</div>
+        <h2>Base del proyecto</h2>
+        <p>Primero construiremos el Gestor de Estudiantes sin intentar aplicar arquitectura avanzada. El objetivo es dominar el flujo básico de Angular: datos, templates, eventos, formularios y CRUD.</p>
+
+        <div class="phase-flow">
+          <span>ng serve</span><span>App</span><span>Data Binding</span><span>@for</span><span>@if</span><span>Eventos</span><span>Formulario</span><span>Validación</span><span>CRUD</span>
+        </div>
+
+        <div class="diagram-card">
+          <div class="diagram-title"><strong>Mapa de la parte base</strong><small>Mermaid.js</small></div>
+          <pre class="mermaid">
+flowchart LR
+  A["app.ts · datos y métodos"] --> B["app.html · template"]
+  B --> C["Interfaz del usuario"]
+  C -->|click / submit| D["Métodos de App"]
+  D --> E["estudiantes[]"]
+  E -->|@for| B
+  B -->|@if| C
+          </pre>
+        </div>
+
+        <div class="principles">
+          <div class="principle"><b>Estado</b>Los datos viven inicialmente en <code>App</code>: lista, formulario y estudiante en edición.</div>
+          <div class="principle"><b>Identidad estable</b>Usamos <code>id</code> para identificar registros; evitamos depender de una posición que puede cambiar.</div>
+          <div class="principle"><b>Flujo visible</b>El usuario genera eventos; los métodos modifican datos; Angular vuelve a reflejarlos en el template.</div>
+          <div class="principle"><b>Primero comprender</b>Antes de separar archivos, entendemos el CRUD completo funcionando en un solo componente.</div>
+        </div>
+      </section>
 
       <section class="section" id="reto-inicial-1" data-structure="base">
         <span class="tag">Reto 01</span>
@@ -785,7 +855,92 @@ proximoId = 4;</code></pre>
           <span>C · Create</span><span class="arrow">|</span><span>R · Read</span><span class="arrow">|</span><span>U · Update</span><span class="arrow">|</span><span>D · Delete</span>
         </div>
 
+        <div class="diagram-card">
+          <div class="diagram-title"><strong>Diagrama completo del CRUD</strong><small>Crear · Leer · Actualizar · Eliminar</small></div>
+          <pre class="mermaid">
+flowchart TD
+  F["Formulario"] --> V{"¿Válido?"}
+  V -->|No| F
+  V -->|Sí| M{"¿idEditando es null?"}
+  M -->|Sí| C["CREATE · push()"]
+  M -->|No| U["UPDATE · find() y actualizar"]
+  C --> L["estudiantes[]"]
+  U --> L
+  L --> R["READ · @for"]
+  R --> E["EDITAR · cargar datos al formulario"]
+  R --> D["DELETE · filter()"]
+  D --> L
+          </pre>
+        </div>
+
         <label class="check"><input type="checkbox" class="progress-check" data-step="10"> Puedo editar, guardar cambios y cancelar edición.</label>
+      </section>
+
+      <section class="phase-banner" id="parte-patron" data-structure="component">
+        <div class="phase-kicker">Parte 2 · Organización</div>
+        <h2>Aplicando un patrón de diseño</h2>
+        <p>Ahora que el CRUD funciona, empezamos a organizarlo con el patrón educativo <strong>Container / Presentational</strong>. No es la única arquitectura posible ni una regla obligatoria de Angular; nos sirve para aprender a separar responsabilidades de forma clara.</p>
+
+        <div class="pattern-role">
+          <div class="role-card">
+            <h4>Container · App</h4>
+            <ul>
+              <li>Es dueño de <code>estudiantes[]</code>.</li>
+              <li>Agrega, edita, elimina y cambia estado.</li>
+              <li>Decide qué datos enviar al hijo.</li>
+              <li>Responde a los eventos emitidos por el hijo.</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <h4>Presentational · TarjetaEstudiante</h4>
+            <ul>
+              <li>Recibe datos con <code>input()</code>.</li>
+              <li>Muestra nombre, correo, edad y estado.</li>
+              <li>Detecta acciones del usuario.</li>
+              <li>Comunica acciones con <code>output()</code>.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="diagram-card">
+          <div class="diagram-title"><strong>Patrón Container / Presentational</strong><small>Responsabilidades separadas</small></div>
+          <pre class="mermaid">
+flowchart LR
+  A["App · Container"] -->|"input(): datos"| B["TarjetaEstudiante · Presentational"]
+  B -->|"output(): eventos"| A
+  A --> C["estudiantes[]"]
+  C --> A
+  B --> D["HTML + CSS de la tarjeta"]
+          </pre>
+        </div>
+
+        <div class="diagram-card">
+          <div class="diagram-title"><strong>Flujo unidireccional</strong><small>Quién posee y quién comunica</small></div>
+          <pre class="mermaid">
+sequenceDiagram
+  participant U as Usuario
+  participant T as TarjetaEstudiante
+  participant A as App
+  participant S as estudiantes[]
+  A->>T: input(nombre, correo, edad, activo)
+  U->>T: clic Eliminar
+  T->>A: output(eliminar, id)
+  A->>S: filter(id)
+  S-->>A: nueva lista
+  A->>T: nuevos datos
+          </pre>
+        </div>
+
+        <div class="principles">
+          <div class="principle"><b>Responsabilidad única</b>Cada componente tiene una tarea principal clara.</div>
+          <div class="principle"><b>Dueño del estado</b>El componente que posee los datos es quien los modifica.</div>
+          <div class="principle"><b>Entrada y salida</b><code>input()</code> recibe datos; <code>output()</code> comunica acciones.</div>
+          <div class="principle"><b>Menos acoplamiento</b>La tarjeta no necesita conocer cómo App guarda o elimina estudiantes.</div>
+        </div>
+
+        <div class="warning">
+          <strong>Lo siguiente que añadiremos a esta parte:</strong> un modelo <code>Estudiante</code>, una carpeta <code>models/</code> y luego servicios. Los iremos incorporando únicamente cuando los construyamos juntos.
+        </div>
       </section>
 
       <section class="section" id="reto5" data-structure="component">
@@ -1044,6 +1199,18 @@ solicitarEditar() {
           <div class="card"><strong>=&gt;</strong><span class="muted">Función flecha.</span></div>
         </div>
 
+        <div class="diagram-card">
+          <div class="diagram-title"><strong>id estable vs posición</strong><small>Por qué dejamos de depender de $index</small></div>
+          <pre class="mermaid">
+flowchart LR
+  A["Carlos · id 2 · índice 1"] --> B["Eliminar Ana"]
+  B --> C["Carlos · id 2 · índice 0"]
+  C --> D{"¿Qué cambió?"}
+  D -->|"índice"| E["Cambió: 1 → 0"]
+  D -->|"id"| F["Permanece: 2"]
+          </pre>
+        </div>
+
         <label class="check"><input type="checkbox" class="progress-check" data-step="14"> El CRUD ya funciona usando id y $event.</label>
       </section>
 
@@ -1247,6 +1414,31 @@ solicitarEditar() {
     if(e.target.closest('aside')||e.target.closest('#menuMobile'))return;
     document.body.classList.remove('menu-open');
   });
+
+  async function renderMermaidDiagrams(){
+    if(!window.mermaid) return;
+    const dark=document.documentElement.dataset.theme==='dark';
+    mermaid.initialize({
+      startOnLoad:false,
+      securityLevel:'loose',
+      theme:dark?'dark':'default',
+      flowchart:{curve:'basis',htmlLabels:true},
+      sequence:{useMaxWidth:true}
+    });
+    const diagrams=[...document.querySelectorAll('.mermaid')];
+    for(const el of diagrams){
+      if(!el.dataset.source) el.dataset.source=el.textContent.trim();
+      el.removeAttribute('data-processed');
+      el.innerHTML=el.dataset.source;
+    }
+    try{ await mermaid.run({nodes:diagrams}); }catch(e){ console.warn('Mermaid:',e); }
+  }
+
+  renderMermaidDiagrams();
+
+  themeButtons.forEach(btn=>btn?.addEventListener('click',()=>{
+    setTimeout(renderMermaidDiagrams,40);
+  }));
 </script>
 </body>
 </html>
