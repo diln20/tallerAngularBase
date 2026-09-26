@@ -113,6 +113,29 @@
     .role-card h4{margin:0 0 8px;color:var(--accent)}
     .role-card ul{margin:8px 0 0;padding-left:20px}
     .side-group{margin:14px 4px 5px;font-size:9px;font-weight:900;letter-spacing:.15em;color:var(--accent2);text-transform:uppercase}
+    .reading-progress{position:fixed;left:0;right:0;top:0;height:3px;z-index:100;background:transparent}
+    .reading-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));box-shadow:0 0 18px color-mix(in srgb,var(--accent) 65%,transparent)}
+    .library-strip{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+    .library-pill{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--panel) 90%,transparent);font-size:11px;color:var(--muted);backdrop-filter:blur(8px)}
+    .library-pill svg{width:14px;height:14px;color:var(--accent)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px}
+    .btn svg{width:15px;height:15px}
+    .logo svg{width:24px;height:24px}
+    .card,.principle,.role-card,.metric,.diagram-card{transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+    .card:hover,.principle:hover,.role-card:hover,.metric:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent) 55%,var(--line));box-shadow:0 12px 28px rgba(0,0,0,.13)}
+    .diagram-card:hover{border-color:color-mix(in srgb,var(--accent2) 52%,var(--line))}
+    .concept-tip{cursor:help;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;text-decoration-color:var(--accent)}
+    .floating-top{position:fixed;right:22px;bottom:22px;width:46px;height:46px;border-radius:15px;border:1px solid var(--line);background:color-mix(in srgb,var(--panel) 92%,transparent);color:var(--text);display:grid;place-items:center;cursor:pointer;z-index:25;box-shadow:var(--shadow);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transform:translateY(12px);transition:.2s ease}
+    .floating-top.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+    .floating-top:hover{border-color:var(--accent);transform:translateY(-2px)}
+    .floating-top svg{width:20px;height:20px}
+    .hljs{background:transparent!important;padding:0!important}
+    pre:has(.hljs){background:#0d1117}
+    [data-theme="light"] pre:has(.hljs){background:#0d1117}
+    .visual-note{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;margin:16px 0;border:1px solid color-mix(in srgb,var(--accent2) 35%,var(--line));border-radius:14px;background:color-mix(in srgb,var(--accent2) 7%,var(--panel2))}
+    .visual-note svg{width:20px;height:20px;color:var(--accent2);flex:0 0 auto;margin-top:2px}
+    .tippy-box{font-size:12px;border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 30px rgba(0,0,0,.28)}
+    .swal2-popup{border-radius:20px!important}
     @media(max-width:980px){
       .layout{display:block}
       aside{display:block;position:fixed;z-index:50;left:0;top:0;width:min(88vw,330px);height:100vh;transform:translateX(-105%);transition:transform .22s ease;box-shadow:var(--shadow)}
@@ -129,19 +152,30 @@
       .section{padding:18px}
     }
   </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github-dark-dimmed.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tippy.js@6/dist/tippy.css">
+
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tippy.js@6/dist/tippy-bundle.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+<div class="reading-progress" aria-hidden="true"><span id="readingProgressFill"></span></div>
 <div class="mobile-top">
-  <button class="btn" id="menuMobile" aria-label="Abrir menú">☰ Menú</button>
+  <button class="btn" id="menuMobile" aria-label="Abrir menú"><i data-lucide="menu"></i><span>Menú</span></button>
   <strong>Taller Angular</strong>
-  <button class="btn" id="themeMobile">Tema</button>
+  <button class="btn" id="themeMobile"><i data-lucide="sun-moon"></i><span>Tema</span></button>
 </div>
 
 <div class="layout">
   <aside>
     <div class="brand">
-      <div class="logo">A</div>
+      <div class="logo"><i data-lucide="braces"></i></div>
       <div>
         <h1>Taller Angular</h1>
         <small>Gestor de estudiantes</small>
@@ -149,8 +183,8 @@
     </div>
 
     <div class="sidebar-tools">
-      <button class="btn" id="themeBtn">Cambiar tema</button>
-      <button class="btn" id="resetBtn">Reiniciar</button>
+      <button class="btn" id="themeBtn"><i data-lucide="sun-moon"></i><span>Cambiar tema</span></button>
+      <button class="btn" id="resetBtn"><i data-lucide="rotate-ccw"></i><span>Reiniciar</span></button>
     </div>
 
     <div class="sidebar-title">RECORRIDO</div>
@@ -211,6 +245,15 @@
         <div class="metric"><b>input()</b><span>Padre → Hijo</span></div>
         <div class="metric"><b>output()</b><span>Hijo → Padre</span></div>
       </div>
+
+      <div class="library-strip" aria-label="Librerías visuales usadas">
+        <span class="library-pill"><i data-lucide="workflow"></i>Mermaid</span>
+        <span class="library-pill"><i data-lucide="sparkles"></i>AOS</span>
+        <span class="library-pill"><i data-lucide="code-2"></i>Highlight.js</span>
+        <span class="library-pill"><i data-lucide="icons"></i>Lucide</span>
+        <span class="library-pill"><i data-lucide="message-circle-question"></i>Tippy.js</span>
+        <span class="library-pill"><i data-lucide="badge-check"></i>SweetAlert2</span>
+      </div>
     </header>
 
     <div class="content">
@@ -226,6 +269,11 @@
         <h3>Recorrido completo</h3>
         <div class="map">
           <span>ng serve</span><span class="arrow">→</span><span>Proyecto completo</span><span class="arrow">→</span><span>Modelo</span><span class="arrow">→</span><span>Patrón de diseño</span><span class="arrow">→</span><span>Componentes</span>
+        </div>
+
+        <div class="visual-note">
+          <i data-lucide="mouse-pointer-2"></i>
+          <div><strong>Ayudas visuales:</strong> las palabras subrayadas con puntos tienen ayuda emergente. Los bloques de código usan resaltado de sintaxis, los diagramas son interactivos con Mermaid y las secciones aparecen suavemente al desplazarte.</div>
         </div>
 
         <div class="warning">
@@ -1532,7 +1580,7 @@ flowchart LR
           <label><input type="radio" name="q3" value="a"> <code>$event</code> puede contener el valor emitido por un output.</label>
           <label><input type="radio" name="q3" value="b"> <code>$event</code> solo se puede usar con formularios.</label>
 
-          <button class="btn" id="quizBtn">Revisar respuestas</button>
+          <button class="btn" id="quizBtn"><i data-lucide="circle-check-big"></i><span>Revisar respuestas</span></button>
           <div class="quiz-result" id="quizResult"></div>
         </div>
 
@@ -1550,6 +1598,10 @@ flowchart LR
     <div class="footer">Taller Angular · Gestor de estudiantes · progreso guardado localmente</div>
   </main>
 </div>
+
+<button class="floating-top" id="backTop" aria-label="Volver arriba" data-tippy-content="Volver al inicio">
+  <i data-lucide="arrow-up"></i>
+</button>
 
 <script>
   const themeButtons = [document.getElementById('themeBtn'), document.getElementById('themeMobile')];
@@ -1583,7 +1635,24 @@ flowchart LR
   }
   updateProgress();
 
-  document.getElementById('resetBtn')?.addEventListener('click', () => {
+  document.getElementById('resetBtn')?.addEventListener('click', async () => {
+    let confirmed = true;
+    if(window.Swal){
+      const result = await Swal.fire({
+        title:'¿Reiniciar progreso?',
+        text:'Se desmarcarán todos los retos completados.',
+        icon:'warning',
+        showCancelButton:true,
+        confirmButtonText:'Sí, reiniciar',
+        cancelButtonText:'Cancelar',
+        background:getComputedStyle(document.documentElement).getPropertyValue('--panel').trim(),
+        color:getComputedStyle(document.documentElement).getPropertyValue('--text').trim()
+      });
+      confirmed = result.isConfirmed;
+    } else {
+      confirmed = window.confirm('¿Reiniciar todo el progreso del taller?');
+    }
+    if(!confirmed) return;
     localStorage.removeItem(storageKey);
     checks.forEach(x => x.checked = false);
     saved.clear();
@@ -1593,12 +1662,24 @@ flowchart LR
   document.querySelectorAll('pre:not(#sidebarProjectTree)').forEach(pre => {
     const btn = document.createElement('button');
     btn.className = 'copy';
-    btn.textContent = 'Copiar';
+    btn.innerHTML = '<span>Copiar</span>';
+    btn.setAttribute('data-tippy-content','Copiar código al portapapeles');
     btn.addEventListener('click', async () => {
       const text = pre.querySelector('code')?.innerText || pre.innerText.replace('Copiar','');
       await navigator.clipboard.writeText(text);
-      btn.textContent = 'Copiado';
-      setTimeout(() => btn.textContent = 'Copiar', 1000);
+      btn.innerHTML = '<span>Copiado ✓</span>';
+      if(window.Swal){
+        Swal.fire({
+          toast:true,
+          position:'bottom-end',
+          icon:'success',
+          title:'Código copiado',
+          showConfirmButton:false,
+          timer:900,
+          timerProgressBar:true
+        });
+      }
+      setTimeout(() => btn.innerHTML = '<span>Copiar</span>', 1000);
     });
     pre.appendChild(btn);
   });
@@ -1614,6 +1695,16 @@ flowchart LR
     const box = document.getElementById('quizResult');
     box.textContent = `Resultado: ${score}/3`;
     box.style.color = score === 3 ? 'var(--ok)' : 'var(--warn)';
+    if(window.Swal){
+      Swal.fire({
+        title: score === 3 ? '¡Excelente!' : 'Sigue practicando',
+        text: `Obtuviste ${score} de 3 respuestas correctas.`,
+        icon: score === 3 ? 'success' : 'info',
+        confirmButtonText:'Continuar',
+        background:getComputedStyle(document.documentElement).getPropertyValue('--panel').trim(),
+        color:getComputedStyle(document.documentElement).getPropertyValue('--text').trim()
+      });
+    }
   });
 
   const projectTrees = {
@@ -1751,8 +1842,97 @@ flowchart LR
   renderMermaidDiagrams();
 
   themeButtons.forEach(btn=>btn?.addEventListener('click',()=>{
-    setTimeout(renderMermaidDiagrams,40);
+    setTimeout(()=>{
+      renderMermaidDiagrams();
+      if(window.lucide) lucide.createIcons();
+      if(window.AOS) AOS.refresh();
+    },40);
   }));
+
+  function initVisualLibraries(){
+    // Iconos
+    if(window.lucide) lucide.createIcons();
+
+    // Animaciones al hacer scroll
+    const animated = [
+      ...document.querySelectorAll('.section,.phase-banner,.diagram-card,.metric,.principle,.role-card')
+    ];
+    animated.forEach((el,index)=>{
+      if(!el.hasAttribute('data-aos')){
+        el.setAttribute('data-aos', index % 3 === 0 ? 'fade-up' : index % 3 === 1 ? 'fade-right' : 'fade-left');
+        el.setAttribute('data-aos-duration','550');
+        el.setAttribute('data-aos-once','true');
+        el.setAttribute('data-aos-offset','45');
+      }
+    });
+    if(window.AOS) AOS.init({once:true,offset:45,duration:550,easing:'ease-out-cubic'});
+
+    // Resaltado de sintaxis
+    if(window.hljs){
+      document.querySelectorAll('pre code').forEach(code=>{
+        if(code.closest('#sidebarProjectTree')) return;
+        if(code.textContent.includes('gestor-estudiantes/')) return;
+        if(code.dataset.highlighted) return;
+        try{ hljs.highlightElement(code); }catch(e){}
+      });
+    }
+
+    // Tooltips de conceptos
+    const conceptHelp = {
+      'ng serve':'Inicia el servidor de desarrollo de Angular.',
+      '@Component':'Decorador que convierte una clase en componente Angular.',
+      'selector':'Etiqueta HTML que identifica un componente.',
+      'imports':'Dependencias que puede usar el template del componente.',
+      'templateUrl':'Ruta del archivo HTML asociado al componente.',
+      'styleUrl':'Ruta del archivo CSS asociado al componente.',
+      '@for':'Control flow de Angular para repetir contenido.',
+      '@if':'Control flow de Angular para mostrar contenido condicional.',
+      'input()':'Permite que un componente hijo reciba datos del padre.',
+      'output()':'Permite que un componente hijo emita eventos hacia el padre.',
+      '$event':'Valor enviado por un evento hacia el manejador.',
+      'interface':'Contrato TypeScript que describe la forma de un objeto.',
+      'Estudiante[]':'Array cuyos elementos deben cumplir el tipo Estudiante.',
+      'find()':'Busca y devuelve el primer elemento que cumple una condición.',
+      'filter()':'Crea un nuevo array con los elementos que cumplen una condición.'
+    };
+    document.querySelectorAll('code:not(pre code)').forEach(el=>{
+      const key=el.textContent.trim();
+      if(conceptHelp[key]){
+        el.classList.add('concept-tip');
+        el.setAttribute('data-tippy-content',conceptHelp[key]);
+      }
+    });
+
+    if(window.tippy){
+      tippy('[data-tippy-content]',{
+        theme:'translucent',
+        animation:'shift-away',
+        duration:[150,120],
+        maxWidth:300,
+        placement:'top',
+        touch:['hold',400]
+      });
+    }
+  }
+
+  // Barra de progreso de lectura y botón volver arriba
+  function updateReadingProgress(){
+    const doc=document.documentElement;
+    const scrollTop=doc.scrollTop||document.body.scrollTop;
+    const height=doc.scrollHeight-doc.clientHeight;
+    const percent=height>0 ? (scrollTop/height)*100 : 0;
+    const fill=document.getElementById('readingProgressFill');
+    if(fill) fill.style.width=Math.min(100,percent)+'%';
+    document.getElementById('backTop')?.classList.toggle('show',scrollTop>500);
+  }
+  window.addEventListener('scroll',updateReadingProgress,{passive:true});
+  updateReadingProgress();
+
+  document.getElementById('backTop')?.addEventListener('click',()=>{
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+
+  initVisualLibraries();
 </script>
 </body>
 </html>
