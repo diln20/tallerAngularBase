@@ -161,6 +161,7 @@
       <a href="#parte-base"><span class="num">A</span>Construcción base</a>
       <a href="#reto-inicial-1"><span class="num">01</span>Ejecutar proyecto</a>
       <a href="#reto-inicial-2"><span class="num">02</span>Estructura y app-root</a>
+      <a href="#fundamentos-componentes"><span class="num">•</span>Fundamentos de componentes</a>
       <a href="#reto-inicial-3"><span class="num">03</span>Data Binding</a>
       <a href="#reto-inicial-4"><span class="num">04</span>Arrays y @for</a>
       <a href="#reto-inicial-5"><span class="num">05</span>@if y boolean</a>
@@ -253,7 +254,7 @@
         <p>Primero terminaremos una versión funcional del Gestor de Estudiantes sin separar todavía la aplicación por patrones. El objetivo es comprender cada función antes de reorganizarla.</p>
 
         <div class="phase-flow">
-          <span>ng serve</span><span>App</span><span>Data Binding</span><span>@for</span><span>@if</span><span>Eventos</span><span>Formulario</span><span>Validación</span><span>CRUD</span><span>Modelo Estudiante</span>
+          <span>ng serve</span><span>App</span><span>Componentes</span><span>Data Binding</span><span>@for</span><span>@if</span><span>Eventos</span><span>Formulario</span><span>Validación</span><span>CRUD</span><span>Modelo Estudiante</span>
         </div>
 
         <div class="diagram-card">
@@ -396,6 +397,86 @@ export class App {
         </div>
 
         <label class="check"><input type="checkbox" class="progress-check" data-step="2"> Identifico <code>app.ts</code>, <code>app.html</code>, <code>app.css</code> y entiendo qué representa <code>app-root</code>.</label>
+      </section>
+
+      <section class="section" id="fundamentos-componentes" data-structure="base">
+        <span class="tag">Concepto base</span>
+        <h2>Fundamentos de componentes en Angular</h2>
+        <div class="goal"><div>🧩</div><div><strong>Objetivo:</strong> entender qué es un componente antes de empezar a crear componentes adicionales.</div></div>
+
+        <div class="warning">
+          <strong>Importante:</strong> en esta primera parte todavía no vamos a separar el proyecto en varios componentes. Primero entendemos que <code>App</code> ya es un componente Angular y cómo funciona.
+        </div>
+
+        <h3>¿Qué es un componente?</h3>
+        <p>Un componente agrupa una parte de la interfaz junto con la lógica y los estilos que necesita.</p>
+
+        <div class="diagram-card">
+          <div class="diagram-title"><strong>Anatomía de un componente</strong><small>Mermaid.js</small></div>
+          <pre class="mermaid">
+flowchart TD
+  C["Componente Angular"] --> T["Clase TypeScript"]
+  C --> H["Template HTML"]
+  C --> S["Estilos CSS"]
+  C --> M["Metadatos @Component"]
+  M --> SE["selector"]
+  M --> IM["imports"]
+  M --> TU["templateUrl"]
+  M --> SU["styleUrl"]
+          </pre>
+        </div>
+
+        <h3>App ya es un componente</h3>
+        <div class="file">📄 src/app/app.ts</div>
+        <pre><code>import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  imports: [],
+  templateUrl: './app.html',
+  styleUrl: './app.css'
+})
+export class App {
+}</code></pre>
+
+        <div class="grid3">
+          <div class="card"><strong>@Component</strong><span class="muted">Le dice a Angular que esta clase representa un componente.</span></div>
+          <div class="card"><strong>selector</strong><span class="muted">Nombre de la etiqueta HTML que representa el componente.</span></div>
+          <div class="card"><strong>imports</strong><span class="muted">Dependencias que el template puede utilizar.</span></div>
+          <div class="card"><strong>templateUrl</strong><span class="muted">Archivo HTML asociado al componente.</span></div>
+          <div class="card"><strong>styleUrl</strong><span class="muted">Archivo CSS asociado al componente.</span></div>
+          <div class="card"><strong>export class App</strong><span class="muted">Clase donde viven datos y métodos del componente.</span></div>
+        </div>
+
+        <h3>¿Cómo aparece App en el navegador?</h3>
+        <div class="diagram-card">
+          <div class="diagram-title"><strong>De index.html al componente App</strong><small>Flujo básico</small></div>
+          <pre class="mermaid">
+flowchart LR
+  I["index.html"] --> R["&lt;app-root&gt;"]
+  R --> S["selector: app-root"]
+  S --> A["Componente App"]
+  A --> H["app.html"]
+  A --> C["app.css"]
+  A --> T["app.ts"]
+          </pre>
+        </div>
+
+        <h3>Padre e hijo: solo el concepto por ahora</h3>
+        <p>Cuando un componente utiliza otro dentro de su template, podemos hablar de una relación <strong>padre → hijo</strong>.</p>
+
+        <pre><code>&lt;app-root&gt;
+  └── futuro componente hijo
+&lt;/app-root&gt;</code></pre>
+
+        <div class="compare">
+          <div class="card"><strong>Parte 1</strong><span class="muted">Entendemos qué es un componente y trabajamos principalmente con <code>App</code>.</span></div>
+          <div class="card"><strong>Parte 2</strong><span class="muted">Creamos <code>TarjetaEstudiante</code> y separamos responsabilidades aplicando el patrón.</span></div>
+        </div>
+
+        <div class="success">
+          <strong>Qué recordar:</strong> Angular ya empezó nuestra aplicación con un componente llamado <code>App</code>. Más adelante crearemos otros componentes para evitar que App termine haciendo demasiado.
+        </div>
       </section>
 
       <section class="section" id="reto-inicial-3" data-structure="base">
