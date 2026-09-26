@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Taller Angular · Gestor de estudiantes</title>
+  <style>
+    :root{
+      --bg:#08111f; --panel:#0f1b2d; --panel2:#13233a; --text:#e8eef8;
+      --muted:#9fb0c7; --line:#243b5a; --accent:#6ee7f9; --accent2:#a78bfa;
+      --ok:#34d399; --warn:#fbbf24; --danger:#fb7185; --code:#07101c;
+      --shadow:0 20px 55px rgba(0,0,0,.28);
+    }
+    [data-theme="light"]{
+      --bg:#eef4fb; --panel:#ffffff; --panel2:#f5f8fc; --text:#142033;
+      --muted:#5c6c81; --line:#d6e0ec; --accent:#0891b2; --accent2:#7c3aed;
+      --ok:#059669; --warn:#b7791f; --danger:#e11d48; --code:#0f172a;
+      --shadow:0 20px 55px rgba(23,42,70,.12);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+    button,input{font:inherit}
+    a{color:inherit}
+    .layout{display:grid;grid-template-columns:290px minmax(0,1fr);min-height:100vh}
+    aside{position:sticky;top:0;height:100vh;padding:24px 18px;border-right:1px solid var(--line);background:color-mix(in srgb,var(--panel) 92%,transparent);overflow:auto}
+    main{min-width:0}
+    .brand{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+    .logo{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#07111f}
+    .brand h1{font-size:15px;margin:0;line-height:1.2}
+    .brand small{color:var(--muted)}
+    .nav{display:grid;gap:6px}
+    .nav a{display:flex;gap:10px;align-items:center;text-decoration:none;padding:10px 12px;border-radius:10px;color:var(--muted);border:1px solid transparent}
+    .nav a:hover{color:var(--text);background:var(--panel2);border-color:var(--line)}
+    .num{width:28px;height:28px;border-radius:9px;background:var(--panel2);display:grid;place-items:center;font-size:12px;color:var(--accent)}
+    .sidebar-tools{display:flex;gap:8px;margin:18px 0}
+    .btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:10px;padding:9px 12px;cursor:pointer}
+    .btn:hover{border-color:var(--accent)}
+    .progressbox{margin-top:18px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--panel2)}
+    .progressbar{height:8px;border-radius:99px;background:color-mix(in srgb,var(--line) 75%,transparent);overflow:hidden;margin-top:8px}
+    .progressbar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+    .hero{padding:66px 7vw 38px;border-bottom:1px solid var(--line);background:
+      radial-gradient(circle at 80% 5%,color-mix(in srgb,var(--accent2) 18%,transparent),transparent 32%),
+      radial-gradient(circle at 5% 5%,color-mix(in srgb,var(--accent) 14%,transparent),transparent 35%)}
+    .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:800}
+    .hero h2{font-size:clamp(34px,5vw,70px);line-height:1.02;margin:12px 0 18px;max-width:960px}
+    .hero p{max-width:800px;color:var(--muted);font-size:18px}
+    .hero-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:28px}
+    .metric{padding:16px;border:1px solid var(--line);border-radius:14px;background:color-mix(in srgb,var(--panel) 88%,transparent)}
+    .metric b{font-size:24px;color:var(--accent)}
+    .metric span{display:block;color:var(--muted);font-size:13px}
+    .content{width:min(1180px,92%);margin:0 auto;padding:42px 0 100px}
+    .section{scroll-margin-top:24px;margin-bottom:28px;padding:26px;border:1px solid var(--line);border-radius:20px;background:var(--panel);box-shadow:var(--shadow)}
+    .section h2{margin:0 0 8px;font-size:28px}
+    .section h3{margin-top:24px}
+    .muted{color:var(--muted)}
+    .goal{display:flex;gap:12px;padding:14px 16px;border-left:4px solid var(--accent);background:var(--panel2);border-radius:10px;margin:16px 0}
+    .map{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:18px;background:var(--panel2);border:1px solid var(--line);border-radius:14px;margin:16px 0}
+    .map span{padding:9px 12px;border-radius:10px;background:var(--panel);border:1px solid var(--line);font-weight:700}
+    .arrow{color:var(--accent);font-weight:900}
+    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .card{padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--panel2)}
+    .card strong{display:block;margin-bottom:4px}
+    .tag{display:inline-flex;padding:4px 8px;border-radius:999px;border:1px solid var(--line);background:var(--panel2);color:var(--accent);font-size:12px;font-weight:800}
+    code{font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace}
+    pre{position:relative;overflow:auto;padding:18px;border-radius:14px;background:var(--code);color:#d8e6f7;border:1px solid color-mix(in srgb,var(--line) 65%,transparent);font-size:13px;line-height:1.6}
+    .copy{position:absolute;right:8px;top:8px;border:1px solid #334155;background:#111827;color:#dbeafe;border-radius:8px;padding:5px 8px;font-size:11px;cursor:pointer}
+    .file{display:inline-flex;align-items:center;gap:7px;color:var(--accent);font-weight:800;font-size:13px;margin-bottom:6px}
+    details{border:1px solid var(--line);border-radius:12px;background:var(--panel2);padding:0 14px;margin:12px 0}
+    summary{cursor:pointer;padding:12px 0;font-weight:800}
+    .task{padding:16px;border:1px dashed color-mix(in srgb,var(--accent) 55%,var(--line));border-radius:14px;background:color-mix(in srgb,var(--accent) 5%,var(--panel2))}
+    .checklist{display:grid;gap:8px;margin-top:12px}
+    .check{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;background:var(--panel2);border:1px solid var(--line)}
+    .check input{margin-top:5px}
+    .warning{border-left:4px solid var(--warn);padding:12px 14px;background:color-mix(in srgb,var(--warn) 8%,var(--panel2));border-radius:10px}
+    .success{border-left:4px solid var(--ok);padding:12px 14px;background:color-mix(in srgb,var(--ok) 8%,var(--panel2));border-radius:10px}
+    .danger{border-left:4px solid var(--danger);padding:12px 14px;background:color-mix(in srgb,var(--danger) 8%,var(--panel2));border-radius:10px}
+    .compare{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .mini-title{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);font-weight:900}
+    .footer{text-align:center;color:var(--muted);padding:30px}
+    .mobile-top{display:none;position:sticky;top:0;z-index:10;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--panel)}
+    .quiz{display:grid;gap:10px}
+    .quiz label{display:block;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);cursor:pointer}
+    .quiz-result{font-weight:800;margin-top:10px}
+    .code-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:980px){
+      .layout{display:block}
+      aside{display:none}
+      .mobile-top{display:flex;justify-content:space-between;align-items:center}
+      .hero-cards,.grid3{grid-template-columns:repeat(2,1fr)}
+      .grid2,.compare,.code-pair{grid-template-columns:1fr}
+    }
+    @media(max-width:620px){
+      .hero{padding:46px 20px 30px}
+      .content{width:min(94%,1180px)}
+      .hero-cards,.grid3{grid-template-columns:1fr}
+      .section{padding:18px}
+    }
+  </style>
+</head>
+<body>
+<div class="mobile-top">
+  <strong>Taller Angular</strong>
+  <button class="btn" id="themeMobile">Tema</button>
+</div>
+
+<div class="layout">
+  <aside>
+    <div class="brand">
+      <div class="logo">A</div>
+      <div>
+        <h1>Taller Angular</h1>
+        <small>Gestor de estudiantes</small>
+      </div>
+    </div>
+
+    <div class="sidebar-tools">
+      <button class="btn" id="themeBtn">Cambiar tema</button>
+      <button class="btn" id="resetBtn">Reiniciar</button>
+    </div>
+
+    <nav class="nav">
+      <a href="#inicio"><span class="num">00</span>Inicio</a>
+      <a href="#reto-inicial-1"><span class="num">01</span>Crear proyecto</a>
+      <a href="#reto-inicial-2"><span class="num">02</span>Estructura y app-root</a>
+      <a href="#reto-inicial-3"><span class="num">03</span>Data Binding</a>
+      <a href="#reto-inicial-4"><span class="num">04</span>Arrays y @for</a>
+      <a href="#reto-inicial-5"><span class="num">05</span>@if y boolean</a>
+      <a href="#reto-inicial-6"><span class="num">06</span>Eventos y estado</a>
+      <a href="#reto1"><span class="num">07</span>Eliminar + id</a>
+      <a href="#reto2"><span class="num">08</span>Agregar estudiante</a>
+      <a href="#reto3"><span class="num">09</span>Validaciones</a>
+      <a href="#reto4"><span class="num">10</span>Editar / CRUD</a>
+      <a href="#reto5"><span class="num">11</span>Crear componente</a>
+      <a href="#reto6"><span class="num">12</span>input()</a>
+      <a href="#reto7"><span class="num">13</span>output()</a>
+      <a href="#reto8"><span class="num">14</span>id + $event</a>
+      <a href="#cierre"><span class="num">15</span>Reto final</a>
+    </nav>
+
+    <div class="progressbox">
+      <strong>Progreso del taller</strong>
+      <div class="progressbar"><span id="progressFill"></span></div>
+      <small id="progressText">0 / 14 retos</small>
+    </div>
+  </aside>
+
+  <main>
+    <header class="hero" id="inicio">
+      <div class="eyebrow">Taller práctico · Angular moderno</div>
+      <h2>Construye un Gestor de Estudiantes paso a paso</h2>
+      <p>
+        Este taller reconstruye todo el recorrido desde el primer comando para crear el proyecto Angular
+        hasta separar componentes y comunicar Padre ↔ Hijo. La idea es que escribas el código tú mismo,
+        pruebes cada etapa y abras las soluciones solo cuando realmente las necesites.
+      </p>
+
+      <div class="hero-cards">
+        <div class="metric"><b>14</b><span>retos desde cero</span></div>
+        <div class="metric"><b>CRUD</b><span>crear, leer, editar y eliminar</span></div>
+        <div class="metric"><b>input()</b><span>Padre → Hijo</span></div>
+        <div class="metric"><b>output()</b><span>Hijo → Padre</span></div>
+      </div>
+    </header>
+
+    <div class="content">
+      <section class="section">
+        <div class="mini-title">Antes de empezar</div>
+        <h2>Cómo trabajar este taller</h2>
+        <div class="grid3">
+          <div class="card"><strong>1. Haz el reto</strong><span class="muted">No copies la solución al principio. Intenta construirlo con las pistas.</span></div>
+          <div class="card"><strong>2. Ejecuta y prueba</strong><span class="muted">Usa <code>ng serve</code> y comprueba cada cambio en el navegador.</span></div>
+          <div class="card"><strong>3. Marca como completado</strong><span class="muted">El progreso queda guardado en tu navegador.</span></div>
+        </div>
+
+        <h3>Recorrido completo</h3>
+        <div class="map">
+          <span>ng new</span><span class="arrow">→</span><span>App</span><span class="arrow">→</span><span>Data Binding</span><span class="arrow">→</span><span>@for / @if</span><span class="arrow">→</span><span>CRUD</span><span class="arrow">→</span><span>Componentes</span>
+        </div>
+
+        <div class="warning">
+          <strong>Archivos modernos usados en el taller:</strong>
+          <code>src/app/app.ts</code>, <code>src/app/app.html</code>, <code>src/app/app.css</code>.
+          Más adelante añadiremos <code>src/app/components/tarjeta-estudiante/</code>.
+        </div>
+      </section>
+
+
+      <section class="section" id="reto-inicial-1">
+        <span class="tag">Reto 07</span>
+        <h2>Crear el proyecto Angular desde cero</h2>
+        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> crear la carpeta de trabajo, generar <code>gestor-estudiantes</code> y ejecutar el servidor local.</div></div>
+
+        <h3>1. Crear una carpeta de trabajo</h3>
+        <p class="muted">Puedes trabajar desde la carpeta que prefieras. Para el taller usaremos una carpeta llamada <code>ClaseAngular</code>.</p>
+        <pre><code>mkdir ClaseAngular
+cd ClaseAngular</code></pre>
+
+        <div class="compare">
+          <div class="card"><strong>mkdir</strong><span class="muted">Crea una carpeta nueva.</span></div>
+          <div class="card"><strong>cd</strong><span class="muted">Significa <b>Change Directory</b>: entrar a una carpeta.</span></div>
+        </div>
+
+        <h3>2. Crear el proyecto</h3>
+        <pre><code>ng new gestor-estudiantes</code></pre>
+
+        <div class="task">
+          Cuando Angular haga preguntas durante la creación, utiliza estas opciones para seguir exactamente el taller:
+        </div>
+
+        <div class="grid3">
+          <div class="card"><strong>Stylesheet</strong><p class="muted"><code>CSS</code></p></div>
+          <div class="card"><strong>SSR / SSG</strong><p class="muted"><code>No</code></p></div>
+          <div class="card"><strong>AI tools</strong><p class="muted"><code>None</code></p></div>
+        </div>
+
+        <details>
+          <summary>¿Qué significan esas opciones?</summary>
+          <p><strong>CSS</strong> indica que los estilos del proyecto se escribirán en archivos CSS normales.</p>
+          <p><strong>SSR/SSG = No</strong> mantiene el proyecto inicial sencillo: el navegador renderiza la aplicación sin añadir todavía renderizado de servidor.</p>
+          <p><strong>AI tools = None</strong> significa que no añadiremos configuración específica para asistentes de IA durante la creación.</p>
+        </details>
+
+        <h3>3. Entrar al proyecto y ejecutarlo</h3>
+        <pre><code>cd gestor-estudiantes
+ng serve</code></pre>
+
+        <div class="map">
+          <span>ng new</span><span class="arrow">→</span><span>gestor-estudiantes</span><span class="arrow">→</span><span>cd</span><span class="arrow">→</span><span>ng serve</span><span class="arrow">→</span><span>localhost:4200</span>
+        </div>
+
+        <div class="warning">
+          <strong>Importante:</strong> deja abierta la terminal donde ejecutaste <code>ng serve</code>. Angular observa tus archivos y recompila la aplicación cada vez que guardas cambios.
+        </div>
+
+        <details>
+          <summary>¿Qué es localhost:4200?</summary>
+          <p><code>localhost</code> significa <b>tu propio computador</b>. <code>4200</code> es el puerto que Angular CLI usa normalmente para el servidor de desarrollo.</p>
+        </details>
+
+        <label class="check"><input type="checkbox" class="progress-check" data-step="7"> El proyecto fue creado y puedo abrir <code>http://localhost:4200</code>.</label>
+      </section>
+
+      <section class="section" id="reto-inicial-2">
+        <span class="tag">Reto 08</span>
+        <h2>Entender la estructura y dejar App limpia</h2>
+        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> saber para qué sirven los archivos principales antes de comenzar a programar.</div></div>
+
+        <div class="file">📁 Estructura principal</div>
+        <pre><code>src/
+├─ app/
+│  ├─ app.ts
+│  ├─ app.html
+│  ├─ app.css
+│  ├─ app.config.ts
+│  └─ app.routes.ts
+├─ main.ts
+├─ index.html
+└─ styles.css</code></pre>
+
+        <div class="grid3">
+          <div class="card"><strong>app.ts</strong><span class="muted">Lógica, datos y métodos del componente principal.</span></div>
+          <div class="card"><strong>app.html</strong><span class="muted">HTML visible del componente principal.</span></div>
+          <div class="card"><strong>app.css</strong><span class="muted">Estilos específicos de App.</span></div>
+          <div class="card"><strong>app.config.ts</strong><span class="muted">Configuración general de Angular.</span></div>
+          <div class="card"><strong>app.routes.ts</strong><span class="muted">Rutas de la aplicación; las usaremos más adelante.</span></div>
+          <div class="card"><strong>main.ts</strong><span class="muted">Punto donde Angular inicia la aplicación.</span></div>
+        </div>
+
+        <h3>1. Dejar el componente principal sencillo</h3>
+        <div class="file">📄 src/app/app.ts</div>
+        <pre><code>import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  imports: [],
+  templateUrl: './app.html',
+  styleUrl: './app.css'
+})
+export class App {
+}</code></pre>
+
+        <details>
+          <summary>¿Qué es app-root?</summary>
+          <p><code>app-root</code> es el <b>selector</b> del componente principal. Angular relaciona <code>&lt;app-root&gt;&lt;/app-root&gt;</code> de <code>index.html</code> con la clase <code>App</code>.</p>
+          <div class="map">
+            <span>index.html</span><span class="arrow">→</span><span>&lt;app-root&gt;</span><span class="arrow">→</span><span>selector</span><span class="arrow">→</span><span>App</span>
+          </div>
+        </details>
+
+        <h3>2. Limpiar el HTML inicial</h3>
+        <div class="file">📄 src/app/app.html</div>
+        <pre><code>&lt;h1&gt;Gestor de estudiantes&lt;/h1&gt;</code></pre>
+
+        <div class="file">📄 src/app/app.css</div>
+        <pre><code>h1 {
+  text-align: center;
+}</code></pre>
+
+        <div class="warning">
+          Si aparece <code>NG8113</code> indicando que <code>RouterOutlet</code> no se usa, no es un error. Si todavía no tienes <code>&lt;router-outlet&gt;</code>, elimina temporalmente <code>RouterOutlet</code> del import y deja <code>imports: []</code>.
+        </div>
+
+        <label class="check"><input type="checkbox" class="progress-check" data-step="8"> Identifico <code>app.ts</code>, <code>app.html</code>, <code>app.css</code> y entiendo qué representa <code>app-root</code>.</label>
+      </section>
+
+      <section class="section" id="reto-inicial-3">
+        <span class="tag">Reto 09</span>
+        <h2>Primer Data Binding: mostrar datos de TypeScript</h2>
+        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> guardar datos en <code>app.ts</code> y mostrarlos en <code>app.html</code> usando interpolación.</div></div>
+
+        <div class="file">📄 src/app/app.ts</div>
+        <pre><code>export class App {
+  titulo = 'Gestor de estudiantes';
+
+  estudiante = {
+    nombre: 'Ana',
+    correo: 'ana@universidad.edu',
+    edad: 20
+  };
+}</code></pre>
+
+        <div class="file">📄 src/app/app.html</div>
+        <pre><code>&lt;h1&gt;{{ titulo }}&lt;/h1&gt;
+
+&lt;p&gt;Nombre: {{ estudiante.nombre }}&lt;/p&gt;
+&lt;p&gt;Correo: {{ estudiante.correo }}&lt;/p&gt;
+&lt;p&gt;Edad: {{ estudiante.edad }}&lt;/p&gt;</code></pre>
+
+        <div class="grid3">
+          <div class="card"><strong>Propiedad</strong><span class="muted"><code>titulo</code> es un dato que pertenece al componente.</span></div>
+          <div class="card"><strong>Objeto { }</strong><span class="muted">Agrupa varios datos relacionados.</span></div>
+          <div class="card"><strong>{{ }}</strong><span class="muted">Interpolación: muestra un valor de TypeScript en el HTML.</span></div>
+        </div>
+
+        <details>
+          <summary>¿Qué significa estudiante.nombre?</summary>
+          <p>La notación punto entra a una propiedad del objeto: <code>estudiante.nombre</code>, <code>estudiante.correo</code> y <code>estudiante.edad</code>.</p>
+        </details>
+
+        <div class="map">
+          <span>app.ts</span><span class="arrow">→</span><span>dato</span><span class="arrow">→</span><span>{{ interpolación }}</span><span class="arrow">→</span><span>app.html</span>
+        </div>
+
+        <div class="task">Cambia el nombre y la edad desde <code>app.ts</code>. Comprueba que el navegador se actualiza sin modificar manualmente el HTML.</div>
+
+        <label class="check"><input type="checkbox" class="progress-check" data-step="9"> Puedo mostrar propiedades y objetos con interpolación.</label>
+      </section>
+
+      <section class="section" id="reto-inicial-4">
+        <span class="tag">Reto 10</span>
+        <h2>Pasar de un estudiante a una lista con @for</h2>
+        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> aprender arrays y repetir una tarjeta por cada estudiante.</div></div>
+
+        <div class="file">📄 src/app/app.ts</div>
+        <pre><code>estudiantes = [
+  {
+    nombre: 'Ana',
+    correo: 'ana@universidad.edu',
+    edad: 20
+  },
+  {
+    nombre: 'Carlos',
+    correo: 'carlos@universidad.edu',
+    edad: 22
+  },
+  {
+    nombre: 'Laura',
+    correo: 'laura@universidad.edu',
+    edad: 19
+  }
+];</code></pre>
+
+        <div class="file">📄 src/app/app.html</div>
+        <pre><code>@for (estudiante of estudiantes; track estudiante.correo) {
+  &lt;div class="estudiante"&gt;
+    &lt;h3&gt;{{ estudiante.nombre }}&lt;/h3&gt;
+    &lt;p&gt;Correo: {{ estudiante.correo }}&lt;/p&gt;
+    &lt;p&gt;Edad: {{ estudiante.edad }}&lt;/p&gt;
+  &lt;/div&gt;
+}</code></pre>
+
+        <div class="file">📄 src/app/app.css</div>
+        <pre><code>.estudiante {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+}</code></pre>
+
+        <div class="compare">
+          <div class="card"><strong>[ ] Array</strong><span class="muted">Una lista que puede guardar varios elementos.</span></div>
+          <div class="card"><strong>@for</strong><span class="muted">Repite un bloque HTML por cada elemento del array.</span></div>
+        </div>
+
+        <details>
+          <summary>¿Qué significan estudiante, of y track?</summary>
+          <p><code>estudiante</code> es la variable temporal de la vuelta actual. <code>of estudiantes</code> indica de qué lista salen los datos. <code>track</code> ayuda a Angular a identificar cada elemento.</p>
+          <p>Por ahora usamos el correo. Más adelante agregaremos un <code>id</code> estable y cambiaremos a <code>track estudiante.id</code>.</p>
+        </details>
+
+        <div class="map">
+          <span>estudiantes[]</span><span class="arrow">→</span><span>@for</span><span class="arrow">→</span><span>estudiante actual</span><span class="arrow">→</span><span>HTML repetido</span>
+        </div>
+
+        <label class="check"><input type="checkbox" class="progress-check" data-step="10"> Veo las tres tarjetas generadas con <code>@for</code>.</label>
+      </section>
+
+      <section class="section" id="reto-inicial-5">
+        <span class="tag">Reto 11</span>
+        <h2>Mostrar Activo/Inactivo con @if</h2>
+        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> agregar un booleano y decidir qué HTML mostrar según su valor.</div></div>
+
+        <h3>1. Agregar activo a cada objeto</h3>
+        <pre><code>estudiantes = [
+  {
+    nombre: 'Ana',
+    correo: 'ana@universidad.edu',
+    edad: 20,
+    activo: true
+  },
+  {
+    nombre: 'Carlos',
+    correo: 'carlos@universidad.edu',
+    edad: 22,
+    activo: false
+  },
+  {
+    nombre: 'Laura',
+    correo: 'laura@universidad.edu',
+    edad: 19,
+    activo: true
+  }
+];</code></pre>
+
+        <h3>2. Evaluar el booleano en el template</h3>
+        <pre><code>@if (estudiante.activo) {
+  &lt;p class="activo"&gt;Estado: Activo&lt;/p&gt;
+} @else {
+  &lt;p class="inactivo"&gt;Estado: Inactivo&lt;/p&gt;
+}</code></pre>
+
+        <div class="grid3">
+          <div class="card"><strong>boolean</strong><span class="muted">Solo puede ser <code>true</code> o <code>false</code>.</span></div>
+          <div class="card"><strong>@if</strong><span class="muted">Muestra un bloque si la condición es verdadera.</span></div>
+          <div class="card"><strong>@else</strong><span class="muted">Muestra la alternativa cuando es falsa.</span></div>
+        </div>
+
+        <div class="map">
+          <span>estudiante.activo</span><span class="arrow">→</span><span>true / false</span><span class="arrow">→</span><span>@if / @else</span><span class="arrow">→</span><span>Activo / Inactivo</span>
+        </div>
+
+        <label class="check"><input type="checkbox" class="progress-check" data-step="11"> Cada tarjeta muestra correctamente Activo o Inactivo.</label>
+      </section>
+
+      <section class="section" id="reto-inicial-6">
+        <span class="tag">Reto 12</span>
+        <h2>Primer evento: cambiar el estado con un clic</h2>
+        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> conectar un botón del HTML con un método de TypeScript.</div></div>
+
+        <div class="file">📄 src/app/app.html</div>
+        <pre><code>@for (
+  estudiante of estudiantes;
+  track estudiante.correo;
+  let i = $index
+) {
+  &lt;!-- datos del estudiante --&gt;
+
+  &lt;button (click)="cambiarEstado(i)"&gt;
+    Cambiar estado
+  &lt;/button&gt;
+}</code></pre>
+
+        <div class="file">📄 src/app/app.ts</div>
+        <pre><code>cambiarEstado(indice: number) {
+  this.estudiantes[indice].activo =
+    !this.estudiantes[indice].activo;
+}</code></pre>
+
+        <div class="grid3">
+          <div class="card"><strong>(click)</strong><span class="muted">Event Binding: ejecuta una acción cuando ocurre un clic.</span></div>
+          <div class="card"><strong>$index</strong><span class="muted">Posición actual del elemento: 0, 1, 2...</span></div>
+          <div class="card"><strong>!</strong><span class="muted">Invierte un booleano: <code>true ↔ false</code>.</span></div>
+        </div>
+
+        <details>
+          <summary>¿Qué significa this.estudiantes[indice].activo?</summary>
+          <p><code>this</code> se refiere al componente actual. <code>estudiantes[indice]</code> selecciona un estudiante por su posición y <code>.activo</code> entra a esa propiedad.</p>
+        </details>
+
+        <div class="map">
+          <span>clic</span><span class="arrow">→</span><span>cambiarEstado(i)</span><span class="arrow">→</span><span>!activo</span><span class="arrow">→</span><span>Angular actualiza la vista</span>
+        </div>
+
+        <label class="check"><input type="checkbox" class="progress-check" data-step="12"> El botón cambia Activo ↔ Inactivo sin recargar la página.</label>
+      </section>
+
+      <section class="section" id="reto1">
+        <span class="tag">Reto 07</span>
+        <h2>Eliminar estudiantes y usar un id estable</h2>
+        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> consolidar los eventos, eliminar elementos del array y comenzar a identificar cada estudiante con un <code>id</code> estable.</div></div>
+
+        <div class="grid2">
+          <div class="card">
+            <strong>Conceptos</strong>
+            <p class="muted"><code>(click)</code>, <code>$index</code>, <code>splice()</code>, <code>id</code> y <code>track estudiante.id</code>.</p>
+          </div>
+          <div class="card">
+            <strong>Resultado esperado</strong>
+            <p class="muted">Cada estudiante tendrá un id estable; podrás cambiar su estado y eliminarlo usando su posición mientras preparas el CRUD.</p>
+          </div>
+        </div>
+
+        <h3>Tu tarea</h3>
+        <div class="task">
+          Antes de continuar, agrega <code>id: 1</code>, <code>id: 2</code> e <code>id: 3</code> a Ana, Carlos y Laura.
+          Cambia <code>track estudiante.correo</code> por <code>track estudiante.id</code>. Conserva el botón de estado y agrega el botón Eliminar usando <code>let i = $index</code>.
+        </div>
+
+        <div class="file">📄 src/app/app.html</div>
+        <pre><code>@for (estudiante of estudiantes; track estudiante.id; let i = $index) {
+  <!-- Muestra los datos -->
+
+  <!-- TODO: botón cambiar estado -->
+
+  <!-- TODO: botón eliminar -->
+}</code></pre>
+
+        <div class="file">📄 src/app/app.ts</div>
+        <pre><code>cambiarEstado(indice: number) {
+  // TODO
+}
+
+eliminarEstudiante(indice: number) {
+  // TODO
+}</code></pre>
+
+        <details>
+          <summary>Pista</summary>
+          <p>Para invertir un boolean usa <code>!</code>. Para eliminar desde una posición usa <code>splice(posicion, cantidad)</code>.</p>
+        </details>
+
+        <details>
+          <summary>Solución orientativa</summary>
+          <div class="code-pair">
+            <pre><code>&lt;button (click)="cambiarEstado(i)"&gt;
+  Cambiar estado
+&lt;/button&gt;
+
+&lt;button (click)="eliminarEstudiante(i)"&gt;
+  Eliminar
+&lt;/button&gt;</code></pre>
+            <pre><code>cambiarEstado(indice: number) {
+  this.estudiantes[indice].activo =
+    !this.estudiantes[indice].activo;
+}
+
+eliminarEstudiante(indice: number) {
+  this.estudiantes.splice(indice, 1);
+}</code></pre>
+          </div>
+        </details>
+
+        <div class="map">
+          <span>clic</span><span class="arrow">→</span><span>método</span><span class="arrow">→</span><span>modifica estudiantes[]</span><span class="arrow">→</span><span>Angular actualiza</span>
+        </div>
+
+        <label class="check"><input type="checkbox" class="progress-check" data-step="7"> Ya uso <code>track estudiante.id</code> y puedo eliminar un estudiante con <code>splice()</code>.</label>
+      </section>
+
+      <section class="section" id="reto2">
+        <span class="tag">Reto 08</span>
+        <h2>Agregar estudiantes con formulario</h2>
+        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> conectar inputs con TypeScript y agregar nuevos objetos al array.</div></div>
+
+        <h3>1. Habilitar formularios</h3>
+        <div class="file">📄 src/app/app.ts</div>
+        <pre><code>import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  imports: [FormsModule],
+  templateUrl: './app.html',
+  styleUrl: './app.css'
+})</code></pre>
+
+        <div class="compare">
+          <div class="card"><strong>import ... from ...</strong><span class="muted">Trae <code>FormsModule</code> al archivo TypeScript.</span></div>
+          <div class="card"><strong>imports: [FormsModule]</strong><span class="muted">Permite que el template use <code>ngModel</code> y <code>ngSubmit</code>.</span></div>
+        </div>
+
+        <h3>2. Crear los datos temporales</h3>
+        <pre><code>nuevoEstudiante = {
+  nombre: '',
+  correo: '',
+  edad: 0,
+  activo: true
+};
+
+proximoId = 4;</code></pre>
+
+        <h3>3. Conectar inputs</h3>
+        <div class="task">
+          Crea un formulario con Nombre, Correo y Edad usando <code>[(ngModel)]</code>.
+        </div>
+
+        <details>
+          <summary>Solución orientativa</summary>
+          <pre><code>&lt;form (ngSubmit)="agregarEstudiante()"&gt;
+
+  &lt;input
+    type="text"
+    name="nombre"
+    [(ngModel)]="nuevoEstudiante.nombre"
+  &gt;
+
+  &lt;input
+    type="email"
+    name="correo"
+    [(ngModel)]="nuevoEstudiante.correo"
+  &gt;
+
+  &lt;input
+    type="number"
+    name="edad"
+    [(ngModel)]="nuevoEstudiante.edad"
+  &gt;
+
+  &lt;button type="submit"&gt;
+    Agregar estudiante
+  &lt;/button&gt;
+
+&lt;/form&gt;</code></pre>
+        </details>
+
+        <h3>4. Insertar en el array</h3>
+        <pre><code>agregarEstudiante() {
+  const estudiante = {
+    id: this.proximoId,
+    nombre: this.nuevoEstudiante.nombre,
+    correo: this.nuevoEstudiante.correo,
+    edad: this.nuevoEstudiante.edad,
+    activo: this.nuevoEstudiante.activo
+  };
+
+  this.estudiantes.push(estudiante);
+  this.proximoId++;
+
+  this.nuevoEstudiante = {
+    nombre: '',
+    correo: '',
+    edad: 0,
+    activo: true
+  };
+}</code></pre>
+
+        <div class="map">
+          <span>input</span><span class="arrow">↔</span><span>[(ngModel)]</span><span class="arrow">↔</span><span>nuevoEstudiante</span><span class="arrow">→</span><span>push()</span>
+        </div>
+
+        <label class="check"><input type="checkbox" class="progress-check" data-step="8"> Puedo agregar un estudiante y el formulario se limpia.</label>
+      </section>
+
+      <section class="section" id="reto3">
+        <span class="tag">Reto 09</span>
+        <h2>Validar el formulario</h2>
+        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> impedir que se envíen datos incompletos o incorrectos.</div></div>
+
+        <h3>Referencia al formulario</h3>
+        <pre><code>&lt;form
+  #formularioEstudiante="ngForm"
+  (ngSubmit)="agregarEstudiante()"
+&gt;</code></pre>
+
+        <div class="grid3">
+          <div class="card"><strong>required</strong><span class="muted">El campo es obligatorio.</span></div>
+          <div class="card"><strong>email</strong><span class="muted">Comprueba formato de correo.</span></div>
+          <div class="card"><strong>min="1"</strong><span class="muted">Define el valor numérico mínimo.</span></div>
+        </div>
+
+        <h3>Mostrar errores cuando corresponda</h3>
+        <pre><code>&lt;input
+  type="text"
+  name="nombre"
+  [(ngModel)]="nuevoEstudiante.nombre"
+  #nombre="ngModel"
+  required
+&gt;
+
+@if (nombre.invalid && nombre.touched) {
+  &lt;p class="error"&gt;
+    El nombre es obligatorio.
+  &lt;/p&gt;
+}</code></pre>
+
+        <div class="map">
+          <span>invalid</span><span class="arrow">+</span><span>touched</span><span class="arrow">→</span><span>mostrar error</span>
+        </div>
+
+        <h3>Bloquear el botón</h3>
+        <pre><code>&lt;button
+  type="submit"
+  [disabled]="formularioEstudiante.invalid"
+&gt;
+  Agregar estudiante
+&lt;/button&gt;</code></pre>
+
+        <div class="success">
+          <strong>Recuerda los bindings:</strong><br>
+          <code>{{ }}</code> mostrar · <code>[ ]</code> controlar propiedad · <code>( )</code> escuchar evento · <code>[( )]</code> dos direcciones.
+        </div>
+
+        <label class="check"><input type="checkbox" class="progress-check" data-step="9"> Los mensajes aparecen al tocar campos y el botón se bloquea si hay errores.</label>
+      </section>
+
+      <section class="section" id="reto4">
+        <span class="tag">Reto 10</span>
+        <h2>Editar estudiantes y completar el CRUD</h2>
+        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> reutilizar el mismo formulario en modo Agregar y modo Editar.</div></div>
+
+        <pre><code>indiceEditando: number | null = null;</code></pre>
+
+        <div class="grid3">
+          <div class="card"><strong>number</strong><span class="muted">Posición del estudiante.</span></div>
+          <div class="card"><strong>|</strong><span class="muted">Se puede leer como “o”.</span></div>
+          <div class="card"><strong>null</strong><span class="muted">No hay nadie en edición.</span></div>
+        </div>
+
+        <h3>Cargar un estudiante en el formulario</h3>
+        <pre><code>editarEstudiante(indice: number) {
+  const estudiante = this.estudiantes[indice];
+
+  this.nuevoEstudiante = {
+    nombre: estudiante.nombre,
+    correo: estudiante.correo,
+    edad: estudiante.edad,
+    activo: estudiante.activo
+  };
+
+  this.indiceEditando = indice;
+}</code></pre>
+
+        <h3>Decidir entre crear y actualizar</h3>
+        <pre><code>if (this.indiceEditando === null) {
+  // Crear con push()
+} else {
+  // Actualizar el estudiante existente
+}</code></pre>
+
+        <h3>Cancelar edición</h3>
+        <pre><code>cancelarEdicion() {
+  this.indiceEditando = null;
+
+  this.nuevoEstudiante = {
+    nombre: '',
+    correo: '',
+    edad: 0,
+    activo: true
+  };
+}</code></pre>
+
+        <div class="map">
+          <span>C · Create</span><span class="arrow">|</span><span>R · Read</span><span class="arrow">|</span><span>U · Update</span><span class="arrow">|</span><span>D · Delete</span>
+        </div>
+
+        <label class="check"><input type="checkbox" class="progress-check" data-step="10"> Puedo editar, guardar cambios y cancelar edición.</label>
+      </section>
+
+      <section class="section" id="reto5">
+        <span class="tag">Reto 11</span>
+        <h2>Crear TarjetaEstudiante como componente separado</h2>
+        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> dejar de tener toda la interfaz dentro de <code>App</code>.</div></div>
+
+        <h3>Generar el componente</h3>
+        <pre><code>ng generate component components/tarjeta-estudiante --skip-tests</code></pre>
+
+        <p class="muted">Forma corta:</p>
+        <pre><code>ng g c components/tarjeta-estudiante --skip-tests</code></pre>
+
+        <h3>Estructura creada</h3>
+        <pre><code>src/app/
+├─ app.ts
+├─ app.html
+├─ app.css
+└─ components/
+   └─ tarjeta-estudiante/
+      ├─ tarjeta-estudiante.ts
+      ├─ tarjeta-estudiante.html
+      └─ tarjeta-estudiante.css</code></pre>
+
+        <h3>Importar el hijo en el padre</h3>
+        <pre><code>import { TarjetaEstudiante }
+  from './components/tarjeta-estudiante/tarjeta-estudiante';
+
+@Component({
+  imports: [
+    FormsModule,
+    TarjetaEstudiante
+  ]
+})</code></pre>
+
+        <h3>Usar su selector</h3>
+        <pre><code>&lt;app-tarjeta-estudiante&gt;
+&lt;/app-tarjeta-estudiante&gt;</code></pre>
+
+        <div class="map">
+          <span>App · Padre</span><span class="arrow">→</span><span>&lt;app-tarjeta-estudiante&gt;</span><span class="arrow">→</span><span>TarjetaEstudiante · Hijo</span>
+        </div>
+
+        <label class="check"><input type="checkbox" class="progress-check" data-step="11"> El componente hijo aparece correctamente en la vista.</label>
+      </section>
+
+      <section class="section" id="reto6">
+        <span class="tag">Reto 12</span>
+        <h2>Padre → Hijo con input()</h2>
+        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> hacer que cada tarjeta reciba los datos del estudiante que representa.</div></div>
+
+        <div class="file">📄 tarjeta-estudiante.ts</div>
+        <pre><code>import { Component, input } from '@angular/core';
+
+export class TarjetaEstudiante {
+  nombre = input.required&lt;string&gt;();
+  correo = input.required&lt;string&gt;();
+  edad = input.required&lt;number&gt;();
+  activo = input.required&lt;boolean&gt;();
+}</code></pre>
+
+        <div class="warning">
+          <strong>Importante:</strong> los inputs creados con <code>input()</code> son signals.
+          En el HTML se leen con <code>nombre()</code>, <code>edad()</code>, etc.
+        </div>
+
+        <div class="file">📄 tarjeta-estudiante.html</div>
+        <pre><code>&lt;h3&gt;{{ nombre() }}&lt;/h3&gt;
+&lt;p&gt;Correo: {{ correo() }}&lt;/p&gt;
+&lt;p&gt;Edad: {{ edad() }}&lt;/p&gt;
+
+@if (activo()) {
+  &lt;p&gt;Activo&lt;/p&gt;
+} @else {
+  &lt;p&gt;Inactivo&lt;/p&gt;
+}</code></pre>
+
+        <div class="file">📄 app.html</div>
+        <pre><code>@for (estudiante of estudiantes; track estudiante.id) {
+  &lt;app-tarjeta-estudiante
+    [nombre]="estudiante.nombre"
+    [correo]="estudiante.correo"
+    [edad]="estudiante.edad"
+    [activo]="estudiante.activo"
+  /&gt;
+}</code></pre>
+
+        <div class="compare">
+          <div class="card"><strong>nombre="Ana"</strong><span class="muted">Envía texto fijo.</span></div>
+          <div class="card"><strong>[nombre]="estudiante.nombre"</strong><span class="muted">Evalúa y envía una expresión.</span></div>
+        </div>
+
+        <label class="check"><input type="checkbox" class="progress-check" data-step="12"> Ana, Carlos y Laura aparecen usando TarjetaEstudiante.</label>
+      </section>
+
+      <section class="section" id="reto7">
+        <span class="tag">Reto 13</span>
+        <h2>Hijo → Padre con output()</h2>
+        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> dejar los botones dentro del hijo y mantener la modificación del array dentro de App.</div></div>
+
+        <div class="file">📄 tarjeta-estudiante.ts</div>
+        <pre><code>import { Component, input, output } from '@angular/core';
+
+editar = output&lt;void&gt;();
+eliminar = output&lt;void&gt;();
+cambiarEstado = output&lt;void&gt;();
+
+solicitarEditar() {
+  this.editar.emit();
+}
+
+solicitarEliminar() {
+  this.eliminar.emit();
+}
+
+solicitarCambiarEstado() {
+  this.cambiarEstado.emit();
+}</code></pre>
+
+        <div class="file">📄 tarjeta-estudiante.html</div>
+        <pre><code>&lt;button (click)="solicitarCambiarEstado()"&gt;
+  Cambiar estado
+&lt;/button&gt;
+
+&lt;button (click)="solicitarEditar()"&gt;
+  Editar
+&lt;/button&gt;
+
+&lt;button (click)="solicitarEliminar()"&gt;
+  Eliminar
+&lt;/button&gt;</code></pre>
+
+        <div class="file">📄 app.html</div>
+        <pre><code>@for (
+  estudiante of estudiantes;
+  track estudiante.id;
+  let i = $index
+) {
+  &lt;app-tarjeta-estudiante
+    [nombre]="estudiante.nombre"
+    [correo]="estudiante.correo"
+    [edad]="estudiante.edad"
+    [activo]="estudiante.activo"
+
+    (cambiarEstado)="cambiarEstado(i)"
+    (editar)="editarEstudiante(i)"
+    (eliminar)="eliminarEstudiante(i)"
+  /&gt;
+}</code></pre>
+
+        <div class="map">
+          <span>input()</span><span class="arrow">Padre → Hijo</span><span>Tarjeta</span><span class="arrow">Hijo → Padre</span><span>output()</span>
+        </div>
+
+        <label class="check"><input type="checkbox" class="progress-check" data-step="13"> Los tres botones funcionan estando dentro de TarjetaEstudiante.</label>
+      </section>
+
+      <section class="section" id="reto8">
+        <span class="tag">Reto 14</span>
+        <h2>Mejorar el CRUD: usar id en vez de $index</h2>
+        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> identificar registros por su identidad estable, no por su posición temporal.</div></div>
+
+        <div class="compare">
+          <div class="card">
+            <strong>$index</strong>
+            <p class="muted">Puede cambiar si eliminamos, ordenamos o insertamos elementos.</p>
+          </div>
+          <div class="card">
+            <strong>id</strong>
+            <p class="muted">Identifica al registro aunque cambie su posición.</p>
+          </div>
+        </div>
+
+        <h3>1. El hijo recibe id y lo emite</h3>
+        <pre><code>id = input.required&lt;number&gt;();
+
+editar = output&lt;number&gt;();
+eliminar = output&lt;number&gt;();
+cambiarEstado = output&lt;number&gt;();
+
+solicitarEditar() {
+  this.editar.emit(this.id());
+}</code></pre>
+
+        <h3>2. El padre escucha con $event</h3>
+        <pre><code>&lt;app-tarjeta-estudiante
+  [id]="estudiante.id"
+  [nombre]="estudiante.nombre"
+  [correo]="estudiante.correo"
+  [edad]="estudiante.edad"
+  [activo]="estudiante.activo"
+
+  (editar)="editarEstudiante($event)"
+  (eliminar)="eliminarEstudiante($event)"
+  (cambiarEstado)="cambiarEstado($event)"
+/&gt;</code></pre>
+
+        <div class="map">
+          <span>emit(2)</span><span class="arrow">→</span><span>$event = 2</span><span class="arrow">→</span><span>editarEstudiante(2)</span>
+        </div>
+
+        <h3>3. Buscar con find()</h3>
+        <pre><code>editarEstudiante(id: number) {
+  const estudiante = this.estudiantes.find(
+    estudiante => estudiante.id === id
+  );
+
+  if (!estudiante) {
+    return;
+  }
+
+  // cargar sus datos
+}</code></pre>
+
+        <h3>4. Eliminar con filter()</h3>
+        <pre><code>eliminarEstudiante(id: number) {
+  this.estudiantes = this.estudiantes.filter(
+    estudiante => estudiante.id !== id
+  );
+}</code></pre>
+
+        <div class="grid3">
+          <div class="card"><strong>find()</strong><span class="muted">Encuentra un elemento.</span></div>
+          <div class="card"><strong>filter()</strong><span class="muted">Crea una lista filtrada.</span></div>
+          <div class="card"><strong>=&gt;</strong><span class="muted">Función flecha.</span></div>
+        </div>
+
+        <label class="check"><input type="checkbox" class="progress-check" data-step="14"> El CRUD ya funciona usando id y $event.</label>
+      </section>
+
+      <section class="section" id="cierre">
+        <span class="tag">Reto final</span>
+        <h2>Entrega del taller</h2>
+        <p class="muted">Tu aplicación debería cumplir ahora con todos estos puntos:</p>
+
+        <div class="checklist">
+          <div class="check">✅ Crea <code>gestor-estudiantes</code> con <code>ng new</code> y lo ejecuta con <code>ng serve</code>.</div>
+          <div class="check">✅ Identifica <code>app.ts</code>, <code>app.html</code>, <code>app.css</code> y <code>app-root</code>.</div>
+          <div class="check">✅ Muestra datos con interpolación <code>{{ }}</code>.</div>
+          <div class="check">✅ Lista estudiantes con <code>@for</code>.</div>
+          <div class="check">✅ Muestra Activo/Inactivo con <code>@if</code>.</div>
+          <div class="check">✅ Agrega registros con formulario y <code>push()</code>.</div>
+          <div class="check">✅ Valida nombre, correo y edad.</div>
+          <div class="check">✅ Edita y cancela edición.</div>
+          <div class="check">✅ Separa la tarjeta en un componente hijo.</div>
+          <div class="check">✅ Usa <code>input()</code> para Padre → Hijo.</div>
+          <div class="check">✅ Usa <code>output()</code> para Hijo → Padre.</div>
+          <div class="check">✅ Usa <code>id</code>, <code>$event</code>, <code>find()</code> y <code>filter()</code>.</div>
+        </div>
+
+        <h3>Mini evaluación</h3>
+        <div class="quiz" id="quiz">
+          <label><input type="radio" name="q1" value="a"> <code>input()</code> envía eventos del hijo al padre.</label>
+          <label><input type="radio" name="q1" value="b"> <code>input()</code> permite que un hijo reciba datos del padre.</label>
+
+          <label><input type="radio" name="q2" value="a"> <code>filter()</code> devuelve una lista con los elementos que cumplen una condición.</label>
+          <label><input type="radio" name="q2" value="b"> <code>filter()</code> siempre devuelve un único objeto.</label>
+
+          <label><input type="radio" name="q3" value="a"> <code>$event</code> puede contener el valor emitido por un output.</label>
+          <label><input type="radio" name="q3" value="b"> <code>$event</code> solo se puede usar con formularios.</label>
+
+          <button class="btn" id="quizBtn">Revisar respuestas</button>
+          <div class="quiz-result" id="quizResult"></div>
+        </div>
+
+        <details>
+          <summary>Reto extra</summary>
+          <p>Agrega una búsqueda por nombre. Crea una propiedad <code>busqueda</code> y muestra solo los estudiantes cuyo nombre contenga ese texto. Intenta resolverlo usando <code>filter()</code>.</p>
+        </details>
+
+        <div class="success">
+          Cuando completes este taller, el siguiente paso será crear un <strong>modelo TypeScript Estudiante</strong>
+          para tipar correctamente <code>id</code>, <code>nombre</code>, <code>correo</code>, <code>edad</code> y <code>activo</code>.
+        </div>
+      </section>
+    </div>
+
+    <div class="footer">Taller Angular · Gestor de estudiantes · progreso guardado localmente</div>
+  </main>
+</div>
+
+<script>
+  const themeButtons = [document.getElementById('themeBtn'), document.getElementById('themeMobile')];
+  const savedTheme = localStorage.getItem('tallerAngularTheme') || 'dark';
+  document.documentElement.dataset.theme = savedTheme;
+
+  themeButtons.forEach(btn => btn?.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem('tallerAngularTheme', next);
+  }));
+
+  const checks = [...document.querySelectorAll('.progress-check')];
+  const storageKey = 'tallerAngularGestorProgress';
+  const saved = new Set(JSON.parse(localStorage.getItem(storageKey) || '[]'));
+
+  checks.forEach(ch => {
+    ch.checked = saved.has(ch.dataset.step);
+    ch.addEventListener('change', () => {
+      ch.checked ? saved.add(ch.dataset.step) : saved.delete(ch.dataset.step);
+      localStorage.setItem(storageKey, JSON.stringify([...saved]));
+      updateProgress();
+    });
+  });
+
+  function updateProgress(){
+    const total = checks.length;
+    const done = checks.filter(x => x.checked).length;
+    document.getElementById('progressText').textContent = `${done} / ${total} retos`;
+    document.getElementById('progressFill').style.width = `${Math.round(done / total * 100)}%`;
+  }
+  updateProgress();
+
+  document.getElementById('resetBtn')?.addEventListener('click', () => {
+    localStorage.removeItem(storageKey);
+    checks.forEach(x => x.checked = false);
+    saved.clear();
+    updateProgress();
+  });
+
+  document.querySelectorAll('pre').forEach(pre => {
+    const btn = document.createElement('button');
+    btn.className = 'copy';
+    btn.textContent = 'Copiar';
+    btn.addEventListener('click', async () => {
+      const text = pre.querySelector('code')?.innerText || pre.innerText.replace('Copiar','');
+      await navigator.clipboard.writeText(text);
+      btn.textContent = 'Copiado';
+      setTimeout(() => btn.textContent = 'Copiar', 1000);
+    });
+    pre.appendChild(btn);
+  });
+
+  document.getElementById('quizBtn')?.addEventListener('click', () => {
+    const q1 = document.querySelector('input[name="q1"]:checked');
+    const q2 = document.querySelector('input[name="q2"]:checked');
+    const q3 = document.querySelector('input[name="q3"]:checked');
+    let score = 0;
+    if(q1?.value === 'b') score++;
+    if(q2?.value === 'a') score++;
+    if(q3?.value === 'a') score++;
+    const box = document.getElementById('quizResult');
+    box.textContent = `Resultado: ${score}/3`;
+    box.style.color = score === 3 ? 'var(--ok)' : 'var(--warn)';
+  });
+</script>
+</body>
+</html>
