@@ -88,7 +88,7 @@
     .nav a.active{color:var(--text);background:var(--panel2);border-color:var(--accent)}
     .nav a.active .num{background:color-mix(in srgb,var(--accent) 18%,var(--panel2));color:var(--accent)}
     .sidebar-tree{padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--panel2)}
-    .sidebar-tree pre{font-size:10px;line-height:1.45;padding:10px;margin:8px 0;max-height:245px}
+    .sidebar-tree pre{font-size:10px;line-height:1.45;padding:10px;margin:8px 0;max-height:420px}
     .sidebar-tree .copy{display:none}
     .tree-stage{font-size:12px;font-weight:800;color:var(--accent)}
     .sidebar-tree small{display:block;color:var(--muted);line-height:1.4}
@@ -157,7 +157,7 @@
     <div class="sidebar-tree">
       <div class="tree-stage" id="treeStageLabel">Proyecto base</div>
       <pre id="sidebarProjectTree"><code></code></pre>
-      <small>El árbol cambia según la etapa que estás leyendo.</small>
+      <small>Muestra todo lo relevante acumulado hasta la etapa actual. <code>node_modules/</code> se omite porque es generado y muy grande.</small>
     </div>
 
     <div class="progressbox">
@@ -199,9 +199,8 @@
         </div>
 
         <div class="warning">
-          <strong>Archivos modernos usados en el taller:</strong>
-          <code>src/app/app.ts</code>, <code>src/app/app.html</code>, <code>src/app/app.css</code>.
-          Más adelante añadiremos <code>src/app/components/tarjeta-estudiante/</code>.
+          <strong>Cómo leer la estructura:</strong>
+          el árbol lateral muestra todo lo relevante que llevamos acumulado. Los archivos de <code>src/</code> son el código de la aplicación; <code>angular.json</code> configura Angular; <code>package.json</code> contiene dependencias y scripts; y los <code>tsconfig*.json</code> configuran TypeScript.
         </div>
       </section>
 
@@ -236,8 +235,10 @@
         </details>
 
         <details class="folder-state" open>
-          <summary>📁 Así está la estructura al comenzar</summary>
+          <summary>📁 Estructura completa en este punto</summary>
           <pre><code>gestor-estudiantes/
+├─ public/
+│  └─ favicon.ico
 ├─ src/
 │  ├─ app/
 │  │  ├─ app.ts
@@ -248,8 +249,15 @@
 │  ├─ main.ts
 │  ├─ index.html
 │  └─ styles.css
+├─ .editorconfig
+├─ .gitignore
 ├─ angular.json
-└─ package.json</code></pre>
+├─ package.json
+├─ package-lock.json
+├─ tsconfig.app.json
+├─ tsconfig.json
+└─ tsconfig.spec.json</code></pre>
+          <p class="muted"><code>node_modules/</code> no se muestra porque contiene dependencias instaladas automáticamente y haría el árbol innecesariamente grande.</p>
         </details>
 
         <label class="check"><input type="checkbox" class="progress-check" data-step="1"> Puedo ejecutar el proyecto con <code>ng serve</code> y abrir <code>localhost:4200</code>.</label>
@@ -822,21 +830,34 @@ proximoId = 4;</code></pre>
         </div>
 
         <details class="folder-state" open>
-          <summary>📁 Así va quedando la estructura del proyecto</summary>
+          <summary>📁 Estructura completa acumulada hasta aquí</summary>
           <pre><code>gestor-estudiantes/
-└─ src/
-   └─ app/
-      ├─ components/
-      │  └─ tarjeta-estudiante/
-      │     ├─ tarjeta-estudiante.ts
-      │     ├─ tarjeta-estudiante.html
-      │     └─ tarjeta-estudiante.css
-      ├─ app.ts
-      ├─ app.html
-      ├─ app.css
-      ├─ app.config.ts
-      └─ app.routes.ts</code></pre>
-          <p class="muted">Apareció <code>components/</code>. Cada vez que creemos o movamos archivos, el taller actualizará este árbol.</p>
+├─ public/
+│  └─ favicon.ico
+├─ src/
+│  ├─ app/
+│  │  ├─ components/
+│  │  │  └─ tarjeta-estudiante/
+│  │  │     ├─ tarjeta-estudiante.ts
+│  │  │     ├─ tarjeta-estudiante.html
+│  │  │     └─ tarjeta-estudiante.css
+│  │  ├─ app.ts
+│  │  ├─ app.html
+│  │  ├─ app.css
+│  │  ├─ app.config.ts
+│  │  └─ app.routes.ts
+│  ├─ main.ts
+│  ├─ index.html
+│  └─ styles.css
+├─ .editorconfig
+├─ .gitignore
+├─ angular.json
+├─ package.json
+├─ package-lock.json
+├─ tsconfig.app.json
+├─ tsconfig.json
+└─ tsconfig.spec.json</code></pre>
+          <p class="muted">Ahora aparece <code>src/app/components/tarjeta-estudiante/</code>, pero seguimos mostrando también todos los archivos anteriores para que puedas ver cómo crece el proyecto completo.</p>
         </details>
 
         <label class="check"><input type="checkbox" class="progress-check" data-step="11"> El componente hijo aparece correctamente en la vista.</label>
@@ -1144,8 +1165,10 @@ solicitarEditar() {
 
   const projectTrees = {
     base: {
-      label: 'Proyecto base',
+      label: 'Todo lo que llevamos · proyecto base',
       tree: `gestor-estudiantes/
+├─ public/
+│  └─ favicon.ico
 ├─ src/
 │  ├─ app/
 │  │  ├─ app.ts
@@ -1156,24 +1179,43 @@ solicitarEditar() {
 │  ├─ main.ts
 │  ├─ index.html
 │  └─ styles.css
+├─ .editorconfig
+├─ .gitignore
 ├─ angular.json
-└─ package.json`
+├─ package.json
+├─ package-lock.json
+├─ tsconfig.app.json
+├─ tsconfig.json
+└─ tsconfig.spec.json`
     },
     component: {
-      label: 'Con TarjetaEstudiante',
+      label: 'Todo lo que llevamos · con TarjetaEstudiante',
       tree: `gestor-estudiantes/
-└─ src/
-   └─ app/
-      ├─ components/
-      │  └─ tarjeta-estudiante/
-      │     ├─ tarjeta-estudiante.ts
-      │     ├─ tarjeta-estudiante.html
-      │     └─ tarjeta-estudiante.css
-      ├─ app.ts
-      ├─ app.html
-      ├─ app.css
-      ├─ app.config.ts
-      └─ app.routes.ts`
+├─ public/
+│  └─ favicon.ico
+├─ src/
+│  ├─ app/
+│  │  ├─ components/
+│  │  │  └─ tarjeta-estudiante/
+│  │  │     ├─ tarjeta-estudiante.ts
+│  │  │     ├─ tarjeta-estudiante.html
+│  │  │     └─ tarjeta-estudiante.css
+│  │  ├─ app.ts
+│  │  ├─ app.html
+│  │  ├─ app.css
+│  │  ├─ app.config.ts
+│  │  └─ app.routes.ts
+│  ├─ main.ts
+│  ├─ index.html
+│  └─ styles.css
+├─ .editorconfig
+├─ .gitignore
+├─ angular.json
+├─ package.json
+├─ package-lock.json
+├─ tsconfig.app.json
+├─ tsconfig.json
+└─ tsconfig.spec.json`
     }
   };
 
