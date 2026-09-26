@@ -157,8 +157,8 @@
     <nav class="nav">
       <a href="#inicio"><span class="num">00</span>Inicio</a>
 
-      <div class="side-group">Parte 1 · Base del proyecto</div>
-      <a href="#parte-base"><span class="num">A</span>Parte base</a>
+      <div class="side-group">Parte 1 · Proyecto completo</div>
+      <a href="#parte-base"><span class="num">A</span>Construcción base</a>
       <a href="#reto-inicial-1"><span class="num">01</span>Ejecutar proyecto</a>
       <a href="#reto-inicial-2"><span class="num">02</span>Estructura y app-root</a>
       <a href="#reto-inicial-3"><span class="num">03</span>Data Binding</a>
@@ -169,14 +169,15 @@
       <a href="#reto2"><span class="num">08</span>Agregar estudiante</a>
       <a href="#reto3"><span class="num">09</span>Validaciones</a>
       <a href="#reto4"><span class="num">10</span>Editar / CRUD</a>
+      <a href="#reto9"><span class="num">11</span>Modelo Estudiante</a>
+      <a href="#proyecto-base-completo"><span class="num">✓</span>Proyecto base terminado</a>
 
-      <div class="side-group">Parte 2 · Patrón de diseño</div>
+      <div class="side-group">Parte 2 · Aplicando patrón</div>
       <a href="#parte-patron"><span class="num">B</span>Container / Presentational</a>
-      <a href="#reto5"><span class="num">11</span>Crear componente</a>
-      <a href="#reto6"><span class="num">12</span>input()</a>
-      <a href="#reto7"><span class="num">13</span>output()</a>
-      <a href="#reto8"><span class="num">14</span>id + $event</a>
-      <a href="#reto9"><span class="num">15</span>Modelo Estudiante</a>
+      <a href="#reto5"><span class="num">12</span>Crear componente</a>
+      <a href="#reto6"><span class="num">13</span>input()</a>
+      <a href="#reto7"><span class="num">14</span>output()</a>
+      <a href="#reto8"><span class="num">15</span>id + $event</a>
 
       <a href="#cierre"><span class="num">16</span>Reto final</a>
     </nav>
@@ -200,7 +201,7 @@
       <div class="eyebrow">Taller práctico · Angular moderno</div>
       <h2>Construye un Gestor de Estudiantes paso a paso</h2>
       <p>
-        Este taller continúa desde el momento en que <code>gestor-estudiantes</code> ya estaba creado. A partir de ahí vamos desarrollando el proyecto paso a paso: ejecutarlo, entender App, construir el CRUD, separar componentes y comunicar Padre ↔ Hijo. Cada paso nuevo que hagamos también se irá agregando a este taller.
+        Este taller continúa desde el momento en que <code>gestor-estudiantes</code> ya estaba creado. A partir de ahí primero terminamos el proyecto funcional completo y, en una segunda parte, refactorizamos ese mismo proyecto aplicando un patrón de diseño. Cada paso nuevo que hagamos también se irá agregando a este taller.
       </p>
 
       <div class="hero-cards">
@@ -223,7 +224,7 @@
 
         <h3>Recorrido completo</h3>
         <div class="map">
-          <span>ng serve</span><span class="arrow">→</span><span>App</span><span class="arrow">→</span><span>Data Binding</span><span class="arrow">→</span><span>@for / @if</span><span class="arrow">→</span><span>CRUD</span><span class="arrow">→</span><span>Componentes</span>
+          <span>ng serve</span><span class="arrow">→</span><span>Proyecto completo</span><span class="arrow">→</span><span>Modelo</span><span class="arrow">→</span><span>Patrón de diseño</span><span class="arrow">→</span><span>Componentes</span>
         </div>
 
         <div class="warning">
@@ -247,12 +248,12 @@
 
 
       <section class="phase-banner" id="parte-base">
-        <div class="phase-kicker">Parte 1 · Fundamentos</div>
-        <h2>Base del proyecto</h2>
-        <p>Primero construiremos el Gestor de Estudiantes sin intentar aplicar arquitectura avanzada. El objetivo es dominar el flujo básico de Angular: datos, templates, eventos, formularios y CRUD.</p>
+        <div class="phase-kicker">Parte 1 · Construcción</div>
+        <h2>Construir el proyecto completo</h2>
+        <p>Primero terminaremos una versión funcional del Gestor de Estudiantes sin separar todavía la aplicación por patrones. El objetivo es comprender cada función antes de reorganizarla.</p>
 
         <div class="phase-flow">
-          <span>ng serve</span><span>App</span><span>Data Binding</span><span>@for</span><span>@if</span><span>Eventos</span><span>Formulario</span><span>Validación</span><span>CRUD</span>
+          <span>ng serve</span><span>App</span><span>Data Binding</span><span>@for</span><span>@if</span><span>Eventos</span><span>Formulario</span><span>Validación</span><span>CRUD</span><span>Modelo Estudiante</span>
         </div>
 
         <div class="diagram-card">
@@ -877,346 +878,8 @@ flowchart TD
         <label class="check"><input type="checkbox" class="progress-check" data-step="10"> Puedo editar, guardar cambios y cancelar edición.</label>
       </section>
 
-      <section class="phase-banner" id="parte-patron" data-structure="component">
-        <div class="phase-kicker">Parte 2 · Organización</div>
-        <h2>Aplicando un patrón de diseño</h2>
-        <p>Ahora que el CRUD funciona, empezamos a organizarlo con el patrón educativo <strong>Container / Presentational</strong>. No es la única arquitectura posible ni una regla obligatoria de Angular; nos sirve para aprender a separar responsabilidades de forma clara.</p>
-
-        <div class="pattern-role">
-          <div class="role-card">
-            <h4>Container · App</h4>
-            <ul>
-              <li>Es dueño de <code>estudiantes[]</code>.</li>
-              <li>Agrega, edita, elimina y cambia estado.</li>
-              <li>Decide qué datos enviar al hijo.</li>
-              <li>Responde a los eventos emitidos por el hijo.</li>
-            </ul>
-          </div>
-          <div class="role-card">
-            <h4>Presentational · TarjetaEstudiante</h4>
-            <ul>
-              <li>Recibe datos con <code>input()</code>.</li>
-              <li>Muestra nombre, correo, edad y estado.</li>
-              <li>Detecta acciones del usuario.</li>
-              <li>Comunica acciones con <code>output()</code>.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="diagram-card">
-          <div class="diagram-title"><strong>Patrón Container / Presentational</strong><small>Responsabilidades separadas</small></div>
-          <pre class="mermaid">
-flowchart LR
-  A["App · Container"] -->|"input(): datos"| B["TarjetaEstudiante · Presentational"]
-  B -->|"output(): eventos"| A
-  A --> C["estudiantes[]"]
-  C --> A
-  B --> D["HTML + CSS de la tarjeta"]
-          </pre>
-        </div>
-
-        <div class="diagram-card">
-          <div class="diagram-title"><strong>Flujo unidireccional</strong><small>Quién posee y quién comunica</small></div>
-          <pre class="mermaid">
-sequenceDiagram
-  participant U as Usuario
-  participant T as TarjetaEstudiante
-  participant A as App
-  participant S as estudiantes[]
-  A->>T: input(nombre, correo, edad, activo)
-  U->>T: clic Eliminar
-  T->>A: output(eliminar, id)
-  A->>S: filter(id)
-  S-->>A: nueva lista
-  A->>T: nuevos datos
-          </pre>
-        </div>
-
-        <div class="principles">
-          <div class="principle"><b>Responsabilidad única</b>Cada componente tiene una tarea principal clara.</div>
-          <div class="principle"><b>Dueño del estado</b>El componente que posee los datos es quien los modifica.</div>
-          <div class="principle"><b>Entrada y salida</b><code>input()</code> recibe datos; <code>output()</code> comunica acciones.</div>
-          <div class="principle"><b>Menos acoplamiento</b>La tarjeta no necesita conocer cómo App guarda o elimina estudiantes.</div>
-        </div>
-
-        <div class="warning">
-          <strong>Lo siguiente que añadiremos a esta parte:</strong> un modelo <code>Estudiante</code>, una carpeta <code>models/</code> y luego servicios. Los iremos incorporando únicamente cuando los construyamos juntos.
-        </div>
-      </section>
-
-      <section class="section" id="reto5" data-structure="component">
-        <span class="tag">Reto 11</span>
-        <h2>Crear TarjetaEstudiante como componente separado</h2>
-        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> dejar de tener toda la interfaz dentro de <code>App</code>.</div></div>
-
-        <h3>Generar el componente</h3>
-        <pre><code>ng generate component components/tarjeta-estudiante --skip-tests</code></pre>
-
-        <p class="muted">Forma corta:</p>
-        <pre><code>ng g c components/tarjeta-estudiante --skip-tests</code></pre>
-
-        <h3>Estructura creada</h3>
-        <pre><code>src/app/
-├─ app.ts
-├─ app.html
-├─ app.css
-└─ components/
-   └─ tarjeta-estudiante/
-      ├─ tarjeta-estudiante.ts
-      ├─ tarjeta-estudiante.html
-      └─ tarjeta-estudiante.css</code></pre>
-
-        <h3>Importar el hijo en el padre</h3>
-        <pre><code>import { TarjetaEstudiante }
-  from './components/tarjeta-estudiante/tarjeta-estudiante';
-
-@Component({
-  imports: [
-    FormsModule,
-    TarjetaEstudiante
-  ]
-})</code></pre>
-
-        <h3>Usar su selector</h3>
-        <pre><code>&lt;app-tarjeta-estudiante&gt;
-&lt;/app-tarjeta-estudiante&gt;</code></pre>
-
-        <div class="map">
-          <span>App · Padre</span><span class="arrow">→</span><span>&lt;app-tarjeta-estudiante&gt;</span><span class="arrow">→</span><span>TarjetaEstudiante · Hijo</span>
-        </div>
-
-        <details class="folder-state" open>
-          <summary>📁 Estructura completa acumulada hasta aquí</summary>
-          <pre><code>gestor-estudiantes/
-├─ public/
-│  └─ favicon.ico
-├─ src/
-│  ├─ app/
-│  │  ├─ components/
-│  │  │  └─ tarjeta-estudiante/
-│  │  │     ├─ tarjeta-estudiante.ts
-│  │  │     ├─ tarjeta-estudiante.html
-│  │  │     └─ tarjeta-estudiante.css
-│  │  ├─ app.ts
-│  │  ├─ app.html
-│  │  ├─ app.css
-│  │  ├─ app.config.ts
-│  │  └─ app.routes.ts
-│  ├─ main.ts
-│  ├─ index.html
-│  └─ styles.css
-├─ .editorconfig
-├─ .gitignore
-├─ angular.json
-├─ package.json
-├─ package-lock.json
-├─ tsconfig.app.json
-├─ tsconfig.json
-└─ tsconfig.spec.json</code></pre>
-          <p class="muted">Ahora aparece <code>src/app/components/tarjeta-estudiante/</code>, pero seguimos mostrando también todos los archivos anteriores para que puedas ver cómo crece el proyecto completo.</p>
-        </details>
-
-        <label class="check"><input type="checkbox" class="progress-check" data-step="11"> El componente hijo aparece correctamente en la vista.</label>
-      </section>
-
-      <section class="section" id="reto6" data-structure="component">
-        <span class="tag">Reto 12</span>
-        <h2>Padre → Hijo con input()</h2>
-        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> hacer que cada tarjeta reciba los datos del estudiante que representa.</div></div>
-
-        <div class="file">📄 tarjeta-estudiante.ts</div>
-        <pre><code>import { Component, input } from '@angular/core';
-
-export class TarjetaEstudiante {
-  nombre = input.required&lt;string&gt;();
-  correo = input.required&lt;string&gt;();
-  edad = input.required&lt;number&gt;();
-  activo = input.required&lt;boolean&gt;();
-}</code></pre>
-
-        <div class="warning">
-          <strong>Importante:</strong> los inputs creados con <code>input()</code> son signals.
-          En el HTML se leen con <code>nombre()</code>, <code>edad()</code>, etc.
-        </div>
-
-        <div class="file">📄 tarjeta-estudiante.html</div>
-        <pre><code>&lt;h3&gt;{{ nombre() }}&lt;/h3&gt;
-&lt;p&gt;Correo: {{ correo() }}&lt;/p&gt;
-&lt;p&gt;Edad: {{ edad() }}&lt;/p&gt;
-
-@if (activo()) {
-  &lt;p&gt;Activo&lt;/p&gt;
-} @else {
-  &lt;p&gt;Inactivo&lt;/p&gt;
-}</code></pre>
-
-        <div class="file">📄 app.html</div>
-        <pre><code>@for (estudiante of estudiantes; track estudiante.id) {
-  &lt;app-tarjeta-estudiante
-    [nombre]="estudiante.nombre"
-    [correo]="estudiante.correo"
-    [edad]="estudiante.edad"
-    [activo]="estudiante.activo"
-  /&gt;
-}</code></pre>
-
-        <div class="compare">
-          <div class="card"><strong>nombre="Ana"</strong><span class="muted">Envía texto fijo.</span></div>
-          <div class="card"><strong>[nombre]="estudiante.nombre"</strong><span class="muted">Evalúa y envía una expresión.</span></div>
-        </div>
-
-        <label class="check"><input type="checkbox" class="progress-check" data-step="12"> Ana, Carlos y Laura aparecen usando TarjetaEstudiante.</label>
-      </section>
-
-      <section class="section" id="reto7" data-structure="component">
-        <span class="tag">Reto 13</span>
-        <h2>Hijo → Padre con output()</h2>
-        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> dejar los botones dentro del hijo y mantener la modificación del array dentro de App.</div></div>
-
-        <div class="file">📄 tarjeta-estudiante.ts</div>
-        <pre><code>import { Component, input, output } from '@angular/core';
-
-editar = output&lt;void&gt;();
-eliminar = output&lt;void&gt;();
-cambiarEstado = output&lt;void&gt;();
-
-solicitarEditar() {
-  this.editar.emit();
-}
-
-solicitarEliminar() {
-  this.eliminar.emit();
-}
-
-solicitarCambiarEstado() {
-  this.cambiarEstado.emit();
-}</code></pre>
-
-        <div class="file">📄 tarjeta-estudiante.html</div>
-        <pre><code>&lt;button (click)="solicitarCambiarEstado()"&gt;
-  Cambiar estado
-&lt;/button&gt;
-
-&lt;button (click)="solicitarEditar()"&gt;
-  Editar
-&lt;/button&gt;
-
-&lt;button (click)="solicitarEliminar()"&gt;
-  Eliminar
-&lt;/button&gt;</code></pre>
-
-        <div class="file">📄 app.html</div>
-        <pre><code>@for (
-  estudiante of estudiantes;
-  track estudiante.id;
-  let i = $index
-) {
-  &lt;app-tarjeta-estudiante
-    [nombre]="estudiante.nombre"
-    [correo]="estudiante.correo"
-    [edad]="estudiante.edad"
-    [activo]="estudiante.activo"
-
-    (cambiarEstado)="cambiarEstado(i)"
-    (editar)="editarEstudiante(i)"
-    (eliminar)="eliminarEstudiante(i)"
-  /&gt;
-}</code></pre>
-
-        <div class="map">
-          <span>input()</span><span class="arrow">Padre → Hijo</span><span>Tarjeta</span><span class="arrow">Hijo → Padre</span><span>output()</span>
-        </div>
-
-        <label class="check"><input type="checkbox" class="progress-check" data-step="13"> Los tres botones funcionan estando dentro de TarjetaEstudiante.</label>
-      </section>
-
-      <section class="section" id="reto8" data-structure="component">
-        <span class="tag">Reto 14</span>
-        <h2>Mejorar el CRUD: usar id en vez de $index</h2>
-        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> identificar registros por su identidad estable, no por su posición temporal.</div></div>
-
-        <div class="compare">
-          <div class="card">
-            <strong>$index</strong>
-            <p class="muted">Puede cambiar si eliminamos, ordenamos o insertamos elementos.</p>
-          </div>
-          <div class="card">
-            <strong>id</strong>
-            <p class="muted">Identifica al registro aunque cambie su posición.</p>
-          </div>
-        </div>
-
-        <h3>1. El hijo recibe id y lo emite</h3>
-        <pre><code>id = input.required&lt;number&gt;();
-
-editar = output&lt;number&gt;();
-eliminar = output&lt;number&gt;();
-cambiarEstado = output&lt;number&gt;();
-
-solicitarEditar() {
-  this.editar.emit(this.id());
-}</code></pre>
-
-        <h3>2. El padre escucha con $event</h3>
-        <pre><code>&lt;app-tarjeta-estudiante
-  [id]="estudiante.id"
-  [nombre]="estudiante.nombre"
-  [correo]="estudiante.correo"
-  [edad]="estudiante.edad"
-  [activo]="estudiante.activo"
-
-  (editar)="editarEstudiante($event)"
-  (eliminar)="eliminarEstudiante($event)"
-  (cambiarEstado)="cambiarEstado($event)"
-/&gt;</code></pre>
-
-        <div class="map">
-          <span>emit(2)</span><span class="arrow">→</span><span>$event = 2</span><span class="arrow">→</span><span>editarEstudiante(2)</span>
-        </div>
-
-        <h3>3. Buscar con find()</h3>
-        <pre><code>editarEstudiante(id: number) {
-  const estudiante = this.estudiantes.find(
-    estudiante => estudiante.id === id
-  );
-
-  if (!estudiante) {
-    return;
-  }
-
-  // cargar sus datos
-}</code></pre>
-
-        <h3>4. Eliminar con filter()</h3>
-        <pre><code>eliminarEstudiante(id: number) {
-  this.estudiantes = this.estudiantes.filter(
-    estudiante => estudiante.id !== id
-  );
-}</code></pre>
-
-        <div class="grid3">
-          <div class="card"><strong>find()</strong><span class="muted">Encuentra un elemento.</span></div>
-          <div class="card"><strong>filter()</strong><span class="muted">Crea una lista filtrada.</span></div>
-          <div class="card"><strong>=&gt;</strong><span class="muted">Función flecha.</span></div>
-        </div>
-
-        <div class="diagram-card">
-          <div class="diagram-title"><strong>id estable vs posición</strong><small>Por qué dejamos de depender de $index</small></div>
-          <pre class="mermaid">
-flowchart LR
-  A["Carlos · id 2 · índice 1"] --> B["Eliminar Ana"]
-  B --> C["Carlos · id 2 · índice 0"]
-  C --> D{"¿Qué cambió?"}
-  D -->|"índice"| E["Cambió: 1 → 0"]
-  D -->|"id"| F["Permanece: 2"]
-          </pre>
-        </div>
-
-        <label class="check"><input type="checkbox" class="progress-check" data-step="14"> El CRUD ya funciona usando id y $event.</label>
-      </section>
-
       <section class="section" id="reto9" data-structure="model">
-        <span class="tag">Reto 15</span>
+        <span class="tag">Reto 11</span>
         <h2>Crear el modelo TypeScript Estudiante</h2>
         <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> dejar de repetir objetos sin tipo y definir una estructura única para todos los estudiantes.</div></div>
 
@@ -1347,6 +1010,190 @@ flowchart LR
 │  └─ favicon.ico
 ├─ src/
 │  ├─ app/
+│  │  ├─ models/
+│  │  │  └─ estudiante.ts
+│  │  ├─ app.ts
+│  │  ├─ app.html
+│  │  ├─ app.css
+│  │  ├─ app.config.ts
+│  │  └─ app.routes.ts
+│  ├─ main.ts
+│  ├─ index.html
+│  └─ styles.css
+├─ .editorconfig
+├─ .gitignore
+├─ angular.json
+├─ package.json
+├─ package-lock.json
+├─ tsconfig.app.json
+├─ tsconfig.json
+└─ tsconfig.spec.json</code></pre>
+          <p class="muted">Hasta aquí el proyecto sigue funcionando principalmente desde <code>App</code>, pero ya tiene un modelo separado para describir correctamente los datos.</p>
+        </details>
+
+        <div class="success">
+          <strong>Hito:</strong> con esto terminamos la primera versión funcional del proyecto. Ya tenemos CRUD, validaciones, IDs estables y tipado con <code>Estudiante</code>. El siguiente paso no agregará una nueva función: reorganizará este mismo proyecto aplicando un patrón.
+        </div>
+
+        <label class="check"><input type="checkbox" class="progress-check" data-step="11"> La lista está tipada como <code>Estudiante[]</code> y TypeScript detecta tipos incorrectos.</label>
+      </section>
+
+      
+
+      <section class="phase-banner" id="proyecto-base-completo" data-structure="model">
+        <div class="phase-kicker">Hito · Primera versión terminada</div>
+        <h2>Proyecto base completo</h2>
+        <p>Antes de aplicar ningún patrón, el Gestor de Estudiantes ya debe funcionar de principio a fin. Esto nos permite comparar claramente el <b>antes</b> y el <b>después</b> de la refactorización.</p>
+
+        <div class="principles">
+          <div class="principle"><b>Crear</b>El formulario agrega estudiantes válidos al array.</div>
+          <div class="principle"><b>Leer</b><code>@for</code> representa la lista completa.</div>
+          <div class="principle"><b>Actualizar</b>Podemos cargar un estudiante, editarlo y guardar cambios.</div>
+          <div class="principle"><b>Eliminar</b>Eliminamos usando un <code>id</code> estable.</div>
+          <div class="principle"><b>Validar</b>El formulario impide enviar datos incompletos o incorrectos.</div>
+          <div class="principle"><b>Tipar</b><code>Estudiante</code> define la forma que deben cumplir los registros.</div>
+        </div>
+
+        <div class="diagram-card">
+          <div class="diagram-title"><strong>Primera versión completa</strong><small>Todo funciona antes de refactorizar</small></div>
+          <pre class="mermaid">
+flowchart TD
+  U["Usuario"] --> F["Formulario"]
+  F --> V{"Validación"}
+  V -->|válido| A["App"]
+  A --> C["CREATE"]
+  A --> R["READ"]
+  A --> UP["UPDATE"]
+  A --> D["DELETE"]
+  C --> S["estudiantes: Estudiante[]"]
+  UP --> S
+  D --> S
+  S --> R
+  R --> U
+  M["interface Estudiante"] --> S
+          </pre>
+        </div>
+
+        <div class="warning">
+          <strong>Regla para la segunda parte:</strong> si algo deja de funcionar mientras aplicamos el patrón, el problema está en la refactorización, no en el CRUD. Por eso terminamos y probamos primero esta versión.
+        </div>
+      </section>
+
+      <section class="phase-banner" id="parte-patron" data-structure="model">
+        <div class="phase-kicker">Parte 2 · Organización</div>
+        <h2>Aplicando un patrón de diseño</h2>
+        <p>Ahora sí: el proyecto ya está completo y probado. Vamos a <strong>refactorizarlo</strong> con el patrón educativo <strong>Container / Presentational</strong>. La funcionalidad debe seguir siendo la misma; lo que cambia es cómo distribuimos responsabilidades y archivos.</p>
+
+        <div class="pattern-role">
+          <div class="role-card">
+            <h4>Container · App</h4>
+            <ul>
+              <li>Es dueño de <code>estudiantes[]</code>.</li>
+              <li>Agrega, edita, elimina y cambia estado.</li>
+              <li>Decide qué datos enviar al hijo.</li>
+              <li>Responde a los eventos emitidos por el hijo.</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <h4>Presentational · TarjetaEstudiante</h4>
+            <ul>
+              <li>Recibe datos con <code>input()</code>.</li>
+              <li>Muestra nombre, correo, edad y estado.</li>
+              <li>Detecta acciones del usuario.</li>
+              <li>Comunica acciones con <code>output()</code>.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="diagram-card">
+          <div class="diagram-title"><strong>Patrón Container / Presentational</strong><small>Responsabilidades separadas</small></div>
+          <pre class="mermaid">
+flowchart LR
+  A["App · Container"] -->|"input(): datos"| B["TarjetaEstudiante · Presentational"]
+  B -->|"output(): eventos"| A
+  A --> C["estudiantes[]"]
+  C --> A
+  B --> D["HTML + CSS de la tarjeta"]
+          </pre>
+        </div>
+
+        <div class="diagram-card">
+          <div class="diagram-title"><strong>Flujo unidireccional</strong><small>Quién posee y quién comunica</small></div>
+          <pre class="mermaid">
+sequenceDiagram
+  participant U as Usuario
+  participant T as TarjetaEstudiante
+  participant A as App
+  participant S as estudiantes[]
+  A->>T: input(nombre, correo, edad, activo)
+  U->>T: clic Eliminar
+  T->>A: output(eliminar, id)
+  A->>S: filter(id)
+  S-->>A: nueva lista
+  A->>T: nuevos datos
+          </pre>
+        </div>
+
+        <div class="principles">
+          <div class="principle"><b>Responsabilidad única</b>Cada componente tiene una tarea principal clara.</div>
+          <div class="principle"><b>Dueño del estado</b>El componente que posee los datos es quien los modifica.</div>
+          <div class="principle"><b>Entrada y salida</b><code>input()</code> recibe datos; <code>output()</code> comunica acciones.</div>
+          <div class="principle"><b>Menos acoplamiento</b>La tarjeta no necesita conocer cómo App guarda o elimina estudiantes.</div>
+        </div>
+
+        <div class="warning">
+          <strong>Importante:</strong> el modelo <code>Estudiante</code> ya existe desde la parte base. Aquí no lo creamos de nuevo; lo reutilizamos mientras separamos presentación y lógica.
+        </div>
+      </section>
+
+      <section class="section" id="reto5" data-structure="component">
+        <span class="tag">Reto 12</span>
+        <h2>Crear TarjetaEstudiante como componente separado</h2>
+        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> dejar de tener toda la interfaz dentro de <code>App</code>.</div></div>
+
+        <h3>Generar el componente</h3>
+        <pre><code>ng generate component components/tarjeta-estudiante --skip-tests</code></pre>
+
+        <p class="muted">Forma corta:</p>
+        <pre><code>ng g c components/tarjeta-estudiante --skip-tests</code></pre>
+
+        <h3>Estructura creada</h3>
+        <pre><code>src/app/
+├─ app.ts
+├─ app.html
+├─ app.css
+└─ components/
+   └─ tarjeta-estudiante/
+      ├─ tarjeta-estudiante.ts
+      ├─ tarjeta-estudiante.html
+      └─ tarjeta-estudiante.css</code></pre>
+
+        <h3>Importar el hijo en el padre</h3>
+        <pre><code>import { TarjetaEstudiante }
+  from './components/tarjeta-estudiante/tarjeta-estudiante';
+
+@Component({
+  imports: [
+    FormsModule,
+    TarjetaEstudiante
+  ]
+})</code></pre>
+
+        <h3>Usar su selector</h3>
+        <pre><code>&lt;app-tarjeta-estudiante&gt;
+&lt;/app-tarjeta-estudiante&gt;</code></pre>
+
+        <div class="map">
+          <span>App · Padre</span><span class="arrow">→</span><span>&lt;app-tarjeta-estudiante&gt;</span><span class="arrow">→</span><span>TarjetaEstudiante · Hijo</span>
+        </div>
+
+        <details class="folder-state" open>
+          <summary>📁 Estructura completa acumulada hasta aquí</summary>
+          <pre><code>gestor-estudiantes/
+├─ public/
+│  └─ favicon.ico
+├─ src/
+│  ├─ app/
 │  │  ├─ components/
 │  │  │  └─ tarjeta-estudiante/
 │  │  │     ├─ tarjeta-estudiante.ts
@@ -1370,13 +1217,206 @@ flowchart LR
 ├─ tsconfig.app.json
 ├─ tsconfig.json
 └─ tsconfig.spec.json</code></pre>
+          <p class="muted">El modelo ya existía. Al aplicar el patrón agregamos <code>components/tarjeta-estudiante/</code> sin perder nada de la estructura anterior.</p>
         </details>
 
-        <div class="success">
-          <strong>Siguiente mejora:</strong> ahora que existe <code>Estudiante</code>, podremos hacer que <code>TarjetaEstudiante</code> reciba un solo objeto tipado en lugar de cuatro o cinco inputs separados.
+        <label class="check"><input type="checkbox" class="progress-check" data-step="12"> El componente hijo aparece correctamente en la vista.</label>
+      </section>
+
+      <section class="section" id="reto6" data-structure="component">
+        <span class="tag">Reto 13</span>
+        <h2>Padre → Hijo con input()</h2>
+        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> hacer que cada tarjeta reciba los datos del estudiante que representa.</div></div>
+
+        <div class="file">📄 tarjeta-estudiante.ts</div>
+        <pre><code>import { Component, input } from '@angular/core';
+
+export class TarjetaEstudiante {
+  nombre = input.required&lt;string&gt;();
+  correo = input.required&lt;string&gt;();
+  edad = input.required&lt;number&gt;();
+  activo = input.required&lt;boolean&gt;();
+}</code></pre>
+
+        <div class="warning">
+          <strong>Importante:</strong> los inputs creados con <code>input()</code> son signals.
+          En el HTML se leen con <code>nombre()</code>, <code>edad()</code>, etc.
         </div>
 
-        <label class="check"><input type="checkbox" class="progress-check" data-step="15"> La lista está tipada como <code>Estudiante[]</code> y TypeScript detecta tipos incorrectos.</label>
+        <div class="file">📄 tarjeta-estudiante.html</div>
+        <pre><code>&lt;h3&gt;{{ nombre() }}&lt;/h3&gt;
+&lt;p&gt;Correo: {{ correo() }}&lt;/p&gt;
+&lt;p&gt;Edad: {{ edad() }}&lt;/p&gt;
+
+@if (activo()) {
+  &lt;p&gt;Activo&lt;/p&gt;
+} @else {
+  &lt;p&gt;Inactivo&lt;/p&gt;
+}</code></pre>
+
+        <div class="file">📄 app.html</div>
+        <pre><code>@for (estudiante of estudiantes; track estudiante.id) {
+  &lt;app-tarjeta-estudiante
+    [nombre]="estudiante.nombre"
+    [correo]="estudiante.correo"
+    [edad]="estudiante.edad"
+    [activo]="estudiante.activo"
+  /&gt;
+}</code></pre>
+
+        <div class="compare">
+          <div class="card"><strong>nombre="Ana"</strong><span class="muted">Envía texto fijo.</span></div>
+          <div class="card"><strong>[nombre]="estudiante.nombre"</strong><span class="muted">Evalúa y envía una expresión.</span></div>
+        </div>
+
+        <label class="check"><input type="checkbox" class="progress-check" data-step="13"> Ana, Carlos y Laura aparecen usando TarjetaEstudiante.</label>
+      </section>
+
+      <section class="section" id="reto7" data-structure="component">
+        <span class="tag">Reto 14</span>
+        <h2>Hijo → Padre con output()</h2>
+        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> dejar los botones dentro del hijo y mantener la modificación del array dentro de App.</div></div>
+
+        <div class="file">📄 tarjeta-estudiante.ts</div>
+        <pre><code>import { Component, input, output } from '@angular/core';
+
+editar = output&lt;void&gt;();
+eliminar = output&lt;void&gt;();
+cambiarEstado = output&lt;void&gt;();
+
+solicitarEditar() {
+  this.editar.emit();
+}
+
+solicitarEliminar() {
+  this.eliminar.emit();
+}
+
+solicitarCambiarEstado() {
+  this.cambiarEstado.emit();
+}</code></pre>
+
+        <div class="file">📄 tarjeta-estudiante.html</div>
+        <pre><code>&lt;button (click)="solicitarCambiarEstado()"&gt;
+  Cambiar estado
+&lt;/button&gt;
+
+&lt;button (click)="solicitarEditar()"&gt;
+  Editar
+&lt;/button&gt;
+
+&lt;button (click)="solicitarEliminar()"&gt;
+  Eliminar
+&lt;/button&gt;</code></pre>
+
+        <div class="file">📄 app.html</div>
+        <pre><code>@for (
+  estudiante of estudiantes;
+  track estudiante.id;
+  let i = $index
+) {
+  &lt;app-tarjeta-estudiante
+    [nombre]="estudiante.nombre"
+    [correo]="estudiante.correo"
+    [edad]="estudiante.edad"
+    [activo]="estudiante.activo"
+
+    (cambiarEstado)="cambiarEstado(i)"
+    (editar)="editarEstudiante(i)"
+    (eliminar)="eliminarEstudiante(i)"
+  /&gt;
+}</code></pre>
+
+        <div class="map">
+          <span>input()</span><span class="arrow">Padre → Hijo</span><span>Tarjeta</span><span class="arrow">Hijo → Padre</span><span>output()</span>
+        </div>
+
+        <label class="check"><input type="checkbox" class="progress-check" data-step="14"> Los tres botones funcionan estando dentro de TarjetaEstudiante.</label>
+      </section>
+
+      <section class="section" id="reto8" data-structure="component">
+        <span class="tag">Reto 15</span>
+        <h2>Mejorar el CRUD: usar id en vez de $index</h2>
+        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> identificar registros por su identidad estable, no por su posición temporal.</div></div>
+
+        <div class="compare">
+          <div class="card">
+            <strong>$index</strong>
+            <p class="muted">Puede cambiar si eliminamos, ordenamos o insertamos elementos.</p>
+          </div>
+          <div class="card">
+            <strong>id</strong>
+            <p class="muted">Identifica al registro aunque cambie su posición.</p>
+          </div>
+        </div>
+
+        <h3>1. El hijo recibe id y lo emite</h3>
+        <pre><code>id = input.required&lt;number&gt;();
+
+editar = output&lt;number&gt;();
+eliminar = output&lt;number&gt;();
+cambiarEstado = output&lt;number&gt;();
+
+solicitarEditar() {
+  this.editar.emit(this.id());
+}</code></pre>
+
+        <h3>2. El padre escucha con $event</h3>
+        <pre><code>&lt;app-tarjeta-estudiante
+  [id]="estudiante.id"
+  [nombre]="estudiante.nombre"
+  [correo]="estudiante.correo"
+  [edad]="estudiante.edad"
+  [activo]="estudiante.activo"
+
+  (editar)="editarEstudiante($event)"
+  (eliminar)="eliminarEstudiante($event)"
+  (cambiarEstado)="cambiarEstado($event)"
+/&gt;</code></pre>
+
+        <div class="map">
+          <span>emit(2)</span><span class="arrow">→</span><span>$event = 2</span><span class="arrow">→</span><span>editarEstudiante(2)</span>
+        </div>
+
+        <h3>3. Buscar con find()</h3>
+        <pre><code>editarEstudiante(id: number) {
+  const estudiante = this.estudiantes.find(
+    estudiante => estudiante.id === id
+  );
+
+  if (!estudiante) {
+    return;
+  }
+
+  // cargar sus datos
+}</code></pre>
+
+        <h3>4. Eliminar con filter()</h3>
+        <pre><code>eliminarEstudiante(id: number) {
+  this.estudiantes = this.estudiantes.filter(
+    estudiante => estudiante.id !== id
+  );
+}</code></pre>
+
+        <div class="grid3">
+          <div class="card"><strong>find()</strong><span class="muted">Encuentra un elemento.</span></div>
+          <div class="card"><strong>filter()</strong><span class="muted">Crea una lista filtrada.</span></div>
+          <div class="card"><strong>=&gt;</strong><span class="muted">Función flecha.</span></div>
+        </div>
+
+        <div class="diagram-card">
+          <div class="diagram-title"><strong>id estable vs posición</strong><small>Por qué dejamos de depender de $index</small></div>
+          <pre class="mermaid">
+flowchart LR
+  A["Carlos · id 2 · índice 1"] --> B["Eliminar Ana"]
+  B --> C["Carlos · id 2 · índice 0"]
+  C --> D{"¿Qué cambió?"}
+  D -->|"índice"| E["Cambió: 1 → 0"]
+  D -->|"id"| F["Permanece: 2"]
+          </pre>
+        </div>
+
+        <label class="check"><input type="checkbox" class="progress-check" data-step="15"> El CRUD ya funciona usando id y $event.</label>
       </section>
 
       <section class="section" id="cierre">
@@ -1385,7 +1425,7 @@ flowchart LR
         <p class="muted">Tu aplicación debería cumplir ahora con todos estos puntos:</p>
 
         <div class="checklist">
-          <div class="check">✅ Crea <code>gestor-estudiantes</code> con <code>ng new</code> y lo ejecuta con <code>ng serve</code>.</div>
+          <div class="check">✅ Ejecuta el proyecto existente <code>gestor-estudiantes</code> con <code>ng serve</code>.</div>
           <div class="check">✅ Identifica <code>app.ts</code>, <code>app.html</code>, <code>app.css</code> y <code>app-root</code>.</div>
           <div class="check">✅ Muestra datos con interpolación <code>{{ }}</code>.</div>
           <div class="check">✅ Lista estudiantes con <code>@for</code>.</div>
@@ -1520,18 +1560,15 @@ flowchart LR
 ├─ tsconfig.json
 └─ tsconfig.spec.json`
     },
-    component: {
-      label: 'Todo lo que llevamos · con TarjetaEstudiante',
+    model: {
+      label: 'Proyecto completo · con modelo Estudiante',
       tree: `gestor-estudiantes/
 ├─ public/
 │  └─ favicon.ico
 ├─ src/
 │  ├─ app/
-│  │  ├─ components/
-│  │  │  └─ tarjeta-estudiante/
-│  │  │     ├─ tarjeta-estudiante.ts
-│  │  │     ├─ tarjeta-estudiante.html
-│  │  │     └─ tarjeta-estudiante.css
+│  │  ├─ models/
+│  │  │  └─ estudiante.ts
 │  │  ├─ app.ts
 │  │  ├─ app.html
 │  │  ├─ app.css
@@ -1549,8 +1586,8 @@ flowchart LR
 ├─ tsconfig.json
 └─ tsconfig.spec.json`
     },
-    model: {
-      label: 'Todo lo que llevamos · con modelo Estudiante',
+    component: {
+      label: 'Aplicando patrón · modelo + componente',
       tree: `gestor-estudiantes/
 ├─ public/
 │  └─ favicon.ico
