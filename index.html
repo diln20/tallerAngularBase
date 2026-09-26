@@ -176,8 +176,9 @@
       <a href="#reto6"><span class="num">12</span>input()</a>
       <a href="#reto7"><span class="num">13</span>output()</a>
       <a href="#reto8"><span class="num">14</span>id + $event</a>
+      <a href="#reto9"><span class="num">15</span>Modelo Estudiante</a>
 
-      <a href="#cierre"><span class="num">15</span>Reto final</a>
+      <a href="#cierre"><span class="num">16</span>Reto final</a>
     </nav>
 
     <div class="sidebar-title structure-label">ESTRUCTURA ACTUAL</div>
@@ -190,7 +191,7 @@
     <div class="progressbox">
       <strong>Progreso del taller</strong>
       <div class="progressbar"><span id="progressFill"></span></div>
-      <small id="progressText">0 / 14 retos</small>
+      <small id="progressText">0 / 15 retos</small>
     </div>
   </aside>
 
@@ -203,7 +204,7 @@
       </p>
 
       <div class="hero-cards">
-        <div class="metric"><b>14</b><span>retos desde el proyecto creado</span></div>
+        <div class="metric"><b>15</b><span>retos desde el proyecto creado</span></div>
         <div class="metric"><b>CRUD</b><span>crear, leer, editar y eliminar</span></div>
         <div class="metric"><b>input()</b><span>Padre → Hijo</span></div>
         <div class="metric"><b>output()</b><span>Hijo → Padre</span></div>
@@ -1214,6 +1215,170 @@ flowchart LR
         <label class="check"><input type="checkbox" class="progress-check" data-step="14"> El CRUD ya funciona usando id y $event.</label>
       </section>
 
+      <section class="section" id="reto9" data-structure="model">
+        <span class="tag">Reto 15</span>
+        <h2>Crear el modelo TypeScript Estudiante</h2>
+        <div class="goal"><div>🎯</div><div><strong>Objetivo:</strong> dejar de repetir objetos sin tipo y definir una estructura única para todos los estudiantes.</div></div>
+
+        <div class="warning">
+          <strong>Idea principal:</strong> una <code>interface</code> no guarda estudiantes. Define la forma que debe tener un estudiante para que TypeScript pueda comprobarla.
+        </div>
+
+        <h3>1. Crear la carpeta models y la interface</h3>
+        <p class="muted">Desde la raíz de <code>gestor-estudiantes</code> ejecuta:</p>
+        <pre><code>ng generate interface models/estudiante</code></pre>
+        <p class="muted">Forma corta:</p>
+        <pre><code>ng g interface models/estudiante</code></pre>
+
+        <div class="file">📄 src/app/models/estudiante.ts</div>
+        <pre><code>export interface Estudiante {
+  id: number;
+  nombre: string;
+  correo: string;
+  edad: number;
+  activo: boolean;
+}</code></pre>
+
+        <div class="grid3">
+          <div class="card"><strong>interface</strong><span class="muted">Define la estructura que debe cumplir un objeto.</span></div>
+          <div class="card"><strong>export</strong><span class="muted">Permite usar la interface desde otros archivos.</span></div>
+          <div class="card"><strong>nombre: string</strong><span class="muted">La propiedad nombre debe contener texto.</span></div>
+        </div>
+
+        <h3>2. Importar el modelo en App</h3>
+        <div class="file">📄 src/app/app.ts</div>
+        <pre><code>import { Estudiante } from './models/estudiante';</code></pre>
+
+        <p>Después tipamos la lista:</p>
+        <pre><code>estudiantes: Estudiante[] = [
+  {
+    id: 1,
+    nombre: 'Ana',
+    correo: 'ana@universidad.edu',
+    edad: 20,
+    activo: true
+  },
+  {
+    id: 2,
+    nombre: 'Carlos',
+    correo: 'carlos@universidad.edu',
+    edad: 22,
+    activo: false
+  },
+  {
+    id: 3,
+    nombre: 'Laura',
+    correo: 'laura@universidad.edu',
+    edad: 19,
+    activo: true
+  }
+];</code></pre>
+
+        <details>
+          <summary>¿Qué significa Estudiante[]?</summary>
+          <p><code>Estudiante</code> es nuestro tipo. Los corchetes <code>[]</code> indican que tendremos una lista. Por tanto, <code>Estudiante[]</code> significa <b>“array de estudiantes”</b>.</p>
+          <pre><code>Estudiante   → un estudiante
+Estudiante[] → varios estudiantes</code></pre>
+        </details>
+
+        <h3>3. Tipar también el estudiante que agregamos</h3>
+        <p>Dentro de <code>agregarEstudiante()</code>, cambia la creación del objeto a:</p>
+        <pre><code>const estudiante: Estudiante = {
+  id: this.proximoId,
+  nombre: this.nuevoEstudiante.nombre,
+  correo: this.nuevoEstudiante.correo,
+  edad: this.nuevoEstudiante.edad,
+  activo: this.nuevoEstudiante.activo
+};
+
+this.estudiantes.push(estudiante);</code></pre>
+
+        <div class="diagram-card">
+          <div class="diagram-title"><strong>El modelo como contrato</strong><small>Mermaid.js</small></div>
+          <pre class="mermaid">
+flowchart TD
+  M["interface Estudiante"] --> I["id: number"]
+  M --> N["nombre: string"]
+  M --> C["correo: string"]
+  M --> E["edad: number"]
+  M --> A["activo: boolean"]
+
+  M --> L["estudiantes: Estudiante[]"]
+  M --> X["const estudiante: Estudiante"]
+  L --> T["TypeScript comprueba cada objeto"]
+  X --> T
+          </pre>
+        </div>
+
+        <div class="diagram-card">
+          <div class="diagram-title"><strong>Antes y después</strong><small>La estructura deja de estar implícita</small></div>
+          <pre class="mermaid">
+flowchart LR
+  subgraph Antes
+    A1["Objeto Ana"]
+    A2["Objeto Carlos"]
+    A3["Objeto Laura"]
+  end
+
+  subgraph Despues["Después"]
+    M["interface Estudiante"]
+    M --> B1["Ana"]
+    M --> B2["Carlos"]
+    M --> B3["Laura"]
+  end
+          </pre>
+        </div>
+
+        <h3>4. Prueba útil: provocar un error de tipo</h3>
+        <p class="muted">Solo para comprobar que TypeScript está protegiendo el modelo, cambia temporalmente una edad:</p>
+        <pre><code>edad: '20'</code></pre>
+        <p>Como <code>edad</code> fue definida como <code>number</code>, el editor/compilador debe marcar el texto <code>'20'</code> como incorrecto. Después vuelve a dejar:</p>
+        <pre><code>edad: 20</code></pre>
+
+        <div class="compare">
+          <div class="card"><strong>La interface sí hace</strong><span class="muted">Describe propiedades y tipos; ayuda a detectar errores.</span></div>
+          <div class="card"><strong>La interface no hace</strong><span class="muted">No crea objetos, no guarda datos y no reemplaza una base de datos.</span></div>
+        </div>
+
+        <details class="folder-state" open>
+          <summary>📁 Estructura completa acumulada hasta aquí</summary>
+          <pre><code>gestor-estudiantes/
+├─ public/
+│  └─ favicon.ico
+├─ src/
+│  ├─ app/
+│  │  ├─ components/
+│  │  │  └─ tarjeta-estudiante/
+│  │  │     ├─ tarjeta-estudiante.ts
+│  │  │     ├─ tarjeta-estudiante.html
+│  │  │     └─ tarjeta-estudiante.css
+│  │  ├─ models/
+│  │  │  └─ estudiante.ts
+│  │  ├─ app.ts
+│  │  ├─ app.html
+│  │  ├─ app.css
+│  │  ├─ app.config.ts
+│  │  └─ app.routes.ts
+│  ├─ main.ts
+│  ├─ index.html
+│  └─ styles.css
+├─ .editorconfig
+├─ .gitignore
+├─ angular.json
+├─ package.json
+├─ package-lock.json
+├─ tsconfig.app.json
+├─ tsconfig.json
+└─ tsconfig.spec.json</code></pre>
+        </details>
+
+        <div class="success">
+          <strong>Siguiente mejora:</strong> ahora que existe <code>Estudiante</code>, podremos hacer que <code>TarjetaEstudiante</code> reciba un solo objeto tipado en lugar de cuatro o cinco inputs separados.
+        </div>
+
+        <label class="check"><input type="checkbox" class="progress-check" data-step="15"> La lista está tipada como <code>Estudiante[]</code> y TypeScript detecta tipos incorrectos.</label>
+      </section>
+
       <section class="section" id="cierre">
         <span class="tag">Reto final</span>
         <h2>Entrega del taller</h2>
@@ -1232,6 +1397,7 @@ flowchart LR
           <div class="check">✅ Usa <code>input()</code> para Padre → Hijo.</div>
           <div class="check">✅ Usa <code>output()</code> para Hijo → Padre.</div>
           <div class="check">✅ Usa <code>id</code>, <code>$event</code>, <code>find()</code> y <code>filter()</code>.</div>
+          <div class="check">✅ Define <code>interface Estudiante</code> y tipa <code>estudiantes: Estudiante[]</code>.</div>
         </div>
 
         <h3>Mini evaluación</h3>
@@ -1255,8 +1421,7 @@ flowchart LR
         </details>
 
         <div class="success">
-          Cuando completes este taller, el siguiente paso será crear un <strong>modelo TypeScript Estudiante</strong>
-          para tipar correctamente <code>id</code>, <code>nombre</code>, <code>correo</code>, <code>edad</code> y <code>activo</code>.
+          Ya tenemos un modelo <strong>Estudiante</strong>. El siguiente paso del proyecto será aprovecharlo para simplificar la comunicación con <code>TarjetaEstudiante</code> y reducir inputs repetidos.
         </div>
       </section>
     </div>
@@ -1367,6 +1532,37 @@ flowchart LR
 │  │  │     ├─ tarjeta-estudiante.ts
 │  │  │     ├─ tarjeta-estudiante.html
 │  │  │     └─ tarjeta-estudiante.css
+│  │  ├─ app.ts
+│  │  ├─ app.html
+│  │  ├─ app.css
+│  │  ├─ app.config.ts
+│  │  └─ app.routes.ts
+│  ├─ main.ts
+│  ├─ index.html
+│  └─ styles.css
+├─ .editorconfig
+├─ .gitignore
+├─ angular.json
+├─ package.json
+├─ package-lock.json
+├─ tsconfig.app.json
+├─ tsconfig.json
+└─ tsconfig.spec.json`
+    },
+    model: {
+      label: 'Todo lo que llevamos · con modelo Estudiante',
+      tree: `gestor-estudiantes/
+├─ public/
+│  └─ favicon.ico
+├─ src/
+│  ├─ app/
+│  │  ├─ components/
+│  │  │  └─ tarjeta-estudiante/
+│  │  │     ├─ tarjeta-estudiante.ts
+│  │  │     ├─ tarjeta-estudiante.html
+│  │  │     └─ tarjeta-estudiante.css
+│  │  ├─ models/
+│  │  │  └─ estudiante.ts
 │  │  ├─ app.ts
 │  │  ├─ app.html
 │  │  ├─ app.css
