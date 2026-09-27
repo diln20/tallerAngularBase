@@ -192,6 +192,7 @@
       <a href="#inicio"><span class="num">00</span>Inicio</a>
 
       <div class="side-group">Parte 1 · Proyecto completo</div>
+      <a href="#preparacion-angular"><span class="num">⚙</span>Preparación Angular</a>
       <a href="#parte-base"><span class="num">A</span>Construcción base</a>
       <a href="#reto-inicial-1"><span class="num">01</span>Ejecutar proyecto</a>
       <a href="#reto-inicial-2"><span class="num">02</span>Estructura y app-root</a>
@@ -268,7 +269,7 @@
 
         <h3>Recorrido completo</h3>
         <div class="map">
-          <span>ng serve</span><span class="arrow">→</span><span>Proyecto completo</span><span class="arrow">→</span><span>Modelo</span><span class="arrow">→</span><span>Patrón de diseño</span><span class="arrow">→</span><span>Componentes</span>
+          <span>Node + npm + CLI</span><span class="arrow">→</span><span>ng serve</span><span class="arrow">→</span><span>Proyecto completo</span><span class="arrow">→</span><span>Modelo</span><span class="arrow">→</span><span>Patrón de diseño</span><span class="arrow">→</span><span>Componentes</span>
         </div>
 
         <div class="visual-note">
@@ -296,6 +297,73 @@
       </section>
 
 
+      <section class="section" id="preparacion-angular" data-structure="base">
+        <span class="tag">Preparación previa</span>
+        <h2>Comprobar Node.js, npm y Angular CLI</h2>
+        <div class="goal"><div>🛠️</div><div><strong>Objetivo:</strong> verificar que el computador tiene las herramientas necesarias para crear y ejecutar un proyecto Angular.</div></div>
+
+        <div class="warning">
+          <strong>Nota:</strong> nuestro recorrido principal empieza con <code>gestor-estudiantes</code> ya creado, pero esta sección queda como referencia completa para un estudiante que empiece desde un computador sin el proyecto.
+        </div>
+
+        <h3>1. Comprobar Node.js</h3>
+        <pre><code class="language-bash">node --version</code></pre>
+        <p class="muted">Debe mostrar una versión instalada de Node.js. También puedes usar <code>node -v</code>.</p>
+
+        <h3>2. Comprobar npm</h3>
+        <pre><code class="language-bash">npm --version</code></pre>
+        <p class="muted"><code>npm</code> es el administrador de paquetes que utilizaremos para instalar Angular CLI y otras dependencias.</p>
+
+        <h3>3. Instalar Angular CLI</h3>
+        <pre><code class="language-bash">npm install -g @angular/cli</code></pre>
+
+        <details>
+          <summary>¿Qué significa cada parte?</summary>
+          <div class="grid3">
+            <div class="card"><strong>npm install</strong><span class="muted">Instala un paquete de npm.</span></div>
+            <div class="card"><strong>-g</strong><span class="muted">Lo instala globalmente para poder usar el comando <code>ng</code> desde la terminal.</span></div>
+            <div class="card"><strong>@angular/cli</strong><span class="muted">Es la herramienta de línea de comandos de Angular.</span></div>
+          </div>
+        </details>
+
+        <h3>4. Verificar Angular CLI</h3>
+        <pre><code class="language-bash">ng version</code></pre>
+        <p class="muted">Si este comando funciona, la terminal reconoce Angular CLI.</p>
+
+        <h3>5. Crear el proyecto</h3>
+        <pre><code class="language-bash">ng new gestor-estudiantes</code></pre>
+
+        <p>Para mantener el mismo proyecto del taller, cuando Angular pregunte por las opciones utiliza:</p>
+
+        <div class="grid3">
+          <div class="card"><strong>Stylesheet</strong><span class="muted"><code>CSS</code></span></div>
+          <div class="card"><strong>SSR / SSG</strong><span class="muted"><code>No</code></span></div>
+          <div class="card"><strong>AI tools</strong><span class="muted"><code>None</code></span></div>
+        </div>
+
+        <h3>6. Entrar al proyecto y ejecutarlo</h3>
+        <pre><code class="language-bash">cd gestor-estudiantes
+ng serve</code></pre>
+
+        <div class="diagram-card">
+          <div class="diagram-title"><strong>Preparación completa del entorno</strong><small>Desde herramientas hasta navegador</small></div>
+          <pre class="mermaid">
+flowchart LR
+  N["node --version"] --> P["npm --version"]
+  P --> C["npm install -g @angular/cli"]
+  C --> V["ng version"]
+  V --> G["ng new gestor-estudiantes"]
+  G --> D["cd gestor-estudiantes"]
+  D --> S["ng serve"]
+  S --> L["localhost:4200"]
+          </pre>
+        </div>
+
+        <div class="success">
+          <strong>Qué recordar:</strong> Node.js ejecuta herramientas de JavaScript fuera del navegador; npm administra paquetes; Angular CLI proporciona el comando <code>ng</code>.
+        </div>
+      </section>
+
       <section class="phase-banner" id="parte-base">
         <div class="phase-kicker">Parte 1 · Construcción</div>
         <h2>Construir el proyecto completo</h2>
@@ -311,10 +379,10 @@
 flowchart LR
   A["app.ts · datos y métodos"] --> B["app.html · template"]
   B --> C["Interfaz del usuario"]
-  C -->|click / submit| D["Métodos de App"]
+  C -->|"click / submit"| D["Métodos de App"]
   D --> E["estudiantes[]"]
-  E -->|@for| B
-  B -->|@if| C
+  E -->|"@for"| B
+  B -->|"@if"| C
           </pre>
         </div>
 
@@ -466,7 +534,7 @@ flowchart TD
   C["Componente Angular"] --> T["Clase TypeScript"]
   C --> H["Template HTML"]
   C --> S["Estilos CSS"]
-  C --> M["Metadatos @Component"]
+  C --> M["Metadatos de @Component"]
   M --> SE["selector"]
   M --> IM["imports"]
   M --> TU["templateUrl"]
@@ -501,7 +569,7 @@ export class App {
           <div class="diagram-title"><strong>De index.html al componente App</strong><small>Flujo básico</small></div>
           <pre class="mermaid">
 flowchart LR
-  I["index.html"] --> R["&lt;app-root&gt;"]
+  I["index.html"] --> R["app-root"]
   R --> S["selector: app-root"]
   S --> A["Componente App"]
   A --> H["app.html"]
@@ -991,10 +1059,10 @@ proximoId = 4;</code></pre>
           <pre class="mermaid">
 flowchart TD
   F["Formulario"] --> V{"¿Válido?"}
-  V -->|No| F
-  V -->|Sí| M{"¿idEditando es null?"}
-  M -->|Sí| C["CREATE · push()"]
-  M -->|No| U["UPDATE · find() y actualizar"]
+  V -->|"No"| F
+  V -->|"Sí"| M{"¿idEditando es null?"}
+  M -->|"Sí"| C["CREATE · push()"]
+  M -->|"No"| U["UPDATE · find() y actualizar"]
   C --> L["estudiantes[]"]
   U --> L
   L --> R["READ · @for"]
@@ -1189,7 +1257,7 @@ flowchart LR
 flowchart TD
   U["Usuario"] --> F["Formulario"]
   F --> V{"Validación"}
-  V -->|válido| A["App"]
+  V -->|"válido"| A["App"]
   A --> C["CREATE"]
   A --> R["READ"]
   A --> UP["UPDATE"]
@@ -1253,7 +1321,7 @@ sequenceDiagram
   participant U as Usuario
   participant T as TarjetaEstudiante
   participant A as App
-  participant S as estudiantes[]
+  participant S as ListaEstudiantes
   A->>T: input(nombre, correo, edad, activo)
   U->>T: clic Eliminar
   T->>A: output(eliminar, id)
@@ -1659,7 +1727,7 @@ flowchart LR
     updateProgress();
   });
 
-  document.querySelectorAll('pre:not(#sidebarProjectTree)').forEach(pre => {
+  document.querySelectorAll('pre:not(#sidebarProjectTree):not(.mermaid)').forEach(pre => {
     const btn = document.createElement('button');
     btn.className = 'copy';
     btn.innerHTML = '<span>Copiar</span>';
@@ -1832,11 +1900,20 @@ flowchart LR
     });
     const diagrams=[...document.querySelectorAll('.mermaid')];
     for(const el of diagrams){
+      el.querySelectorAll('.copy,button').forEach(x=>x.remove());
       if(!el.dataset.source) el.dataset.source=el.textContent.trim();
       el.removeAttribute('data-processed');
-      el.innerHTML=el.dataset.source;
+      el.textContent=el.dataset.source;
     }
-    try{ await mermaid.run({nodes:diagrams}); }catch(e){ console.warn('Mermaid:',e); }
+    try{
+      await mermaid.run({nodes:diagrams});
+    }catch(e){
+      console.warn('Mermaid:',e);
+      diagrams.forEach(el=>{
+        if(el.querySelector('svg')) return;
+        el.innerHTML='<div class="danger"><strong>No se pudo renderizar este diagrama.</strong><br><small>Revisa la sintaxis Mermaid del bloque.</small></div>';
+      });
+    }
   }
 
   renderMermaidDiagrams();
