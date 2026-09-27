@@ -136,6 +136,79 @@
     .visual-note svg{width:20px;height:20px;color:var(--accent2);flex:0 0 auto;margin-top:2px}
     .tippy-box{font-size:12px;border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 30px rgba(0,0,0,.28)}
     .swal2-popup{border-radius:20px!important}
+    /* ======================================================
+       EDITOR DE CÓDIGO
+       ====================================================== */
+    .code-window{margin:16px 0 20px;border:1px solid #263248;border-radius:17px;overflow:hidden;background:#0b1020;box-shadow:0 18px 42px rgba(2,6,23,.18)}
+    .code-window:hover{border-color:#475569;box-shadow:0 22px 52px rgba(2,6,23,.24)}
+    .code-topbar{height:43px;display:flex;align-items:center;gap:11px;padding:0 12px;background:linear-gradient(180deg,#182235,#121a2a);border-bottom:1px solid #253149;color:#aebbd0}
+    .traffic-lights{display:flex;gap:7px;flex:0 0 auto}
+    .traffic-lights i{display:block;width:9px;height:9px;border-radius:50%}
+    .traffic-lights i:nth-child(1){background:#fb7185;box-shadow:0 0 0 1px rgba(251,113,133,.18)}
+    .traffic-lights i:nth-child(2){background:#fbbf24;box-shadow:0 0 0 1px rgba(251,191,36,.18)}
+    .traffic-lights i:nth-child(3){background:#34d399;box-shadow:0 0 0 1px rgba(52,211,153,.18)}
+    .code-title{font:700 11px/1.2 "SFMono-Regular",Consolas,monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .code-spacer{flex:1}
+    .code-language{font:800 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:.08em;text-transform:uppercase;padding:5px 8px;border-radius:7px;border:1px solid #34425d;background:#1a2436;color:#aebbd0}
+    .code-window pre{margin:0!important;border:0!important;border-radius:0!important;background:#0b1020!important;padding:18px 18px 20px!important;box-shadow:none!important}
+    .code-window pre code{font-size:13px;line-height:1.75}
+    .code-window .copy{position:static!important;padding:6px 9px!important;background:#1d2940!important;border-color:#384963!important;color:#d9e5f7!important}
+    .code-window .copy:hover{background:#263650!important;border-color:#64748b!important}
+    .code-window .copy span{font-size:10px;font-weight:800}
+    .hljs-ln{border-collapse:collapse;width:100%}
+    .hljs-ln td{padding:0!important;border:0!important}
+    .hljs-ln-numbers{width:34px!important;min-width:34px!important;text-align:right!important;padding-right:13px!important;color:#475569!important;border-right:1px solid #1f2b40!important;user-select:none;vertical-align:top}
+    .hljs-ln-code{padding-left:15px!important}
+    .hljs-ln-code>div{padding-left:0!important}
+    /* Paleta de sintaxis más viva */
+    .hljs-keyword,.hljs-selector-tag,.hljs-literal,.hljs-section{color:#c084fc!important;font-weight:700}
+    .hljs-string,.hljs-attr,.hljs-template-tag,.hljs-template-variable{color:#86efac!important}
+    .hljs-title,.hljs-title.function_,.hljs-function .hljs-title{color:#67e8f9!important}
+    .hljs-number,.hljs-symbol,.hljs-bullet{color:#fbbf24!important}
+    .hljs-built_in,.hljs-type,.hljs-class .hljs-title{color:#38bdf8!important}
+    .hljs-variable,.hljs-property,.hljs-params{color:#f0abfc!important}
+    .hljs-tag,.hljs-name,.hljs-selector-class,.hljs-selector-id{color:#fb7185!important}
+    .hljs-attribute{color:#f9a8d4!important}
+    .hljs-comment,.hljs-quote{color:#64748b!important;font-style:italic}
+    .hljs-meta,.hljs-doctag{color:#22d3ee!important}
+    .hljs-punctuation{color:#cbd5e1!important}
+
+    /* ======================================================
+       DIAGRAMAS / ARQUITECTURA
+       ====================================================== */
+    .diagram-card{padding:0!important;border:1px solid #c4b5fd!important;border-radius:22px!important;background:#f8fbff!important;overflow:hidden!important;box-shadow:0 18px 46px rgba(76,29,149,.09)!important;color:#162033!important}
+    .diagram-card:hover{border-color:#8b5cf6!important;box-shadow:0 22px 58px rgba(76,29,149,.14)!important}
+    .diagram-card .diagram-title{margin:0!important;min-height:66px;padding:14px 18px!important;border-bottom:1px solid #dbe5f1;background:linear-gradient(110deg,#faf7ff 0%,#f2f6ff 48%,#eefbff 100%);display:flex!important;align-items:center!important;gap:12px!important}
+    .diagram-card .diagram-title strong{font-size:15px!important;color:#172033!important}
+    .diagram-card .diagram-title small{color:#64748b!important;margin-left:auto}
+    .diagram-title::before{content:'↳';display:grid;place-items:center;width:30px;height:30px;border-radius:10px;background:#ede9fe;color:#7c3aed;font-weight:900;flex:0 0 auto}
+    .diagram-open{display:inline-flex;align-items:center;gap:6px;border:1px solid #d8ddeb;background:#fff;color:#7c3aed;border-radius:11px;padding:8px 11px;font-size:10px;font-weight:900;cursor:pointer;white-space:nowrap;box-shadow:0 5px 14px rgba(76,29,149,.06)}
+    .diagram-open:hover{border-color:#a78bfa;background:#f5f3ff;transform:translateY(-1px)}
+    .diagram-card .mermaid{position:relative;display:flex;justify-content:center;align-items:center;min-width:620px;min-height:250px;padding:30px 24px 34px!important;margin:0!important;background:
+      radial-gradient(circle at 18% 20%,rgba(167,139,250,.09),transparent 25%),
+      radial-gradient(circle at 83% 75%,rgba(34,211,238,.09),transparent 28%),
+      linear-gradient(180deg,#fbfdff 0%,#f2f8fc 100%)!important}
+    .diagram-card .mermaid::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.3;background-image:radial-gradient(#cbd5e1 .7px,transparent .7px);background-size:16px 16px}
+    .diagram-card .mermaid svg{position:relative;z-index:1;max-width:100%!important;height:auto!important;overflow:visible}
+    .diagram-card .mermaid .edgePath path{stroke:#7c3aed!important;stroke-width:2.2px!important}
+    .diagram-card .mermaid marker path{fill:#7c3aed!important;stroke:#7c3aed!important}
+    .diagram-card .mermaid .edgeLabel{background:#fff!important;color:#5b21b6!important;font-weight:800!important;border:1px solid #ddd6fe;border-radius:7px;padding:2px 5px}
+    .diagram-card .mermaid .node rect,.diagram-card .mermaid .node polygon,.diagram-card .mermaid .node path{stroke-width:1.7px!important;filter:drop-shadow(0 8px 9px rgba(30,41,59,.12))}
+    .diagram-card .mermaid .node .label,.diagram-card .mermaid .nodeLabel{font-weight:750!important}
+    .diagram-card .mermaid .node.tone-0 rect,.diagram-card .mermaid .node.tone-0 polygon,.diagram-card .mermaid .node.tone-0 path{fill:#7c3aed!important;stroke:#6d28d9!important}
+    .diagram-card .mermaid .node.tone-0 .nodeLabel,.diagram-card .mermaid .node.tone-0 .label{color:#fff!important;fill:#fff!important}
+    .diagram-card .mermaid .node.tone-1 rect,.diagram-card .mermaid .node.tone-1 polygon,.diagram-card .mermaid .node.tone-1 path{fill:#0891b2!important;stroke:#0e7490!important}
+    .diagram-card .mermaid .node.tone-1 .nodeLabel,.diagram-card .mermaid .node.tone-1 .label{color:#fff!important;fill:#fff!important}
+    .diagram-card .mermaid .node.tone-2 rect,.diagram-card .mermaid .node.tone-2 polygon,.diagram-card .mermaid .node.tone-2 path{fill:#2563eb!important;stroke:#1d4ed8!important}
+    .diagram-card .mermaid .node.tone-2 .nodeLabel,.diagram-card .mermaid .node.tone-2 .label{color:#fff!important;fill:#fff!important}
+    .diagram-card .mermaid .node.tone-3 rect,.diagram-card .mermaid .node.tone-3 polygon,.diagram-card .mermaid .node.tone-3 path{fill:#ec4899!important;stroke:#db2777!important}
+    .diagram-card .mermaid .node.tone-3 .nodeLabel,.diagram-card .mermaid .node.tone-3 .label{color:#fff!important;fill:#fff!important}
+    .diagram-card .mermaid .node.tone-4 rect,.diagram-card .mermaid .node.tone-4 polygon,.diagram-card .mermaid .node.tone-4 path{fill:#fff7ed!important;stroke:#fb923c!important}
+    .diagram-card .mermaid .node.tone-4 .nodeLabel,.diagram-card .mermaid .node.tone-4 .label{color:#9a3412!important;fill:#9a3412!important}
+    .diagram-card .mermaid .node.tone-5 rect,.diagram-card .mermaid .node.tone-5 polygon,.diagram-card .mermaid .node.tone-5 path{fill:#ecfeff!important;stroke:#22d3ee!important}
+    .diagram-card .mermaid .node.tone-5 .nodeLabel,.diagram-card .mermaid .node.tone-5 .label{color:#155e75!important;fill:#155e75!important}
+    .diagram-card .mermaid .cluster rect{fill:rgba(255,255,255,.72)!important;stroke:#c4b5fd!important;stroke-dasharray:6 4!important}
+    .diagram-card .mermaid .cluster-label{color:#6d28d9!important;font-weight:900!important}
     @media(max-width:980px){
       .layout{display:block}
       aside{display:block;position:fixed;z-index:50;left:0;top:0;width:min(88vw,330px);height:100vh;transform:translateX(-105%);transition:transform .22s ease;box-shadow:var(--shadow)}
@@ -153,12 +226,13 @@
     }
   </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github-dark-dimmed.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/atom-one-dark.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tippy.js@6/dist/tippy.css">
 
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/tippy.js@6/dist/tippy-bundle.umd.min.js"></script>
@@ -1305,12 +1379,17 @@ flowchart TD
         <div class="diagram-card">
           <div class="diagram-title"><strong>Patrón Container / Presentational</strong><small>Responsabilidades separadas</small></div>
           <pre class="mermaid">
-flowchart LR
-  A["App · Container"] -->|"input(): datos"| B["TarjetaEstudiante · Presentational"]
-  B -->|"output(): eventos"| A
-  A --> C["estudiantes[]"]
-  C --> A
-  B --> D["HTML + CSS de la tarjeta"]
+flowchart TD
+  APP["⚡ App · Container<br/>estado + lógica"]
+  CARD["🧩 TarjetaEstudiante<br/>Presentational"]
+  STATE["🗃 estudiantes[]<br/>estado de la aplicación"]
+  VIEW["🎨 HTML + CSS<br/>presentación"]
+
+  APP -->|"input() · datos"| CARD
+  CARD -->|"output() · eventos"| APP
+  APP --> STATE
+  STATE --> APP
+  CARD --> VIEW
           </pre>
         </div>
 
@@ -1890,13 +1969,42 @@ flowchart LR
 
   async function renderMermaidDiagrams(){
     if(!window.mermaid) return;
-    const dark=document.documentElement.dataset.theme==='dark';
     mermaid.initialize({
       startOnLoad:false,
       securityLevel:'loose',
-      theme:dark?'dark':'default',
-      flowchart:{curve:'basis',htmlLabels:true},
-      sequence:{useMaxWidth:true}
+      theme:'base',
+      themeVariables:{
+        background:'#f8fbff',
+        primaryColor:'#ede9fe',
+        primaryTextColor:'#172033',
+        primaryBorderColor:'#8b5cf6',
+        secondaryColor:'#ecfeff',
+        secondaryTextColor:'#164e63',
+        secondaryBorderColor:'#22d3ee',
+        tertiaryColor:'#fff7ed',
+        tertiaryTextColor:'#9a3412',
+        tertiaryBorderColor:'#fb923c',
+        lineColor:'#7c3aed',
+        edgeLabelBackground:'#ffffff',
+        clusterBkg:'#ffffff',
+        clusterBorder:'#c4b5fd',
+        fontFamily:'Inter, ui-sans-serif, system-ui, sans-serif',
+        fontSize:'15px'
+      },
+      flowchart:{
+        curve:'basis',
+        htmlLabels:true,
+        nodeSpacing:52,
+        rankSpacing:64,
+        padding:18,
+        useMaxWidth:true
+      },
+      sequence:{
+        useMaxWidth:true,
+        actorMargin:60,
+        boxMargin:10,
+        messageMargin:28
+      }
     });
     const diagrams=[...document.querySelectorAll('.mermaid')];
     for(const el of diagrams){
@@ -1907,6 +2015,40 @@ flowchart LR
     }
     try{
       await mermaid.run({nodes:diagrams});
+
+      diagrams.forEach(el=>{
+        const svg=el.querySelector('svg');
+        if(!svg) return;
+
+        svg.removeAttribute('height');
+        svg.style.maxWidth='100%';
+        svg.style.height='auto';
+
+        [...svg.querySelectorAll('g.node')].forEach((node,index)=>{
+          for(let i=0;i<6;i++) node.classList.remove('tone-'+i);
+          node.classList.add('tone-'+(index%6));
+        });
+
+        const card=el.closest('.diagram-card');
+        const title=card?.querySelector('.diagram-title');
+        if(title && !title.querySelector('.diagram-open')){
+          const btn=document.createElement('button');
+          btn.className='diagram-open';
+          btn.type='button';
+          btn.innerHTML='↗ Abrir SVG';
+          btn.addEventListener('click',()=>{
+            const currentSvg=card.querySelector('.mermaid svg');
+            if(!currentSvg) return;
+            const clone=currentSvg.cloneNode(true);
+            clone.setAttribute('xmlns','http://www.w3.org/2000/svg');
+            const blob=new Blob([clone.outerHTML],{type:'image/svg+xml'});
+            const url=URL.createObjectURL(blob);
+            window.open(url,'_blank','noopener');
+            setTimeout(()=>URL.revokeObjectURL(url),30000);
+          });
+          title.appendChild(btn);
+        }
+      });
     }catch(e){
       console.warn('Mermaid:',e);
       diagrams.forEach(el=>{
@@ -1926,7 +2068,95 @@ flowchart LR
     },40);
   }));
 
+  function inferCodeLanguage(code){
+    const text=code.textContent.trim();
+    const current=code.className.match(/language-([\w-]+)/)?.[1];
+    if(current) return current;
+
+    if(/^(node|npm|ng|cd|mkdir|git)\s/m.test(text)) return 'bash';
+    if(/<\/?[a-z][\s\S]*>|@for\s*\(|@if\s*\(|\[\w+\]=|\(click\)=/i.test(text)) return 'xml';
+    if(/@Component|export\s+(class|interface)|import\s+\{|:\s*(string|number|boolean)\b|input\.required|output</.test(text)) return 'typescript';
+    if(/[.#][\w-]+\s*\{|\b(display|padding|margin|color|background|border|text-align|grid-template-columns)\s*:/.test(text)) return 'css';
+    if(/^(gestor-estudiantes\/|src\/)|[├└│]─/.test(text)) return 'plaintext';
+    return 'javascript';
+  }
+
+  function prettyLanguage(lang){
+    return ({
+      bash:'Terminal',
+      shell:'Terminal',
+      typescript:'TypeScript',
+      javascript:'JavaScript',
+      xml:'HTML',
+      html:'HTML',
+      css:'CSS',
+      plaintext:'Estructura'
+    })[lang] || lang;
+  }
+
+  function nearestFileName(pre,lang){
+    let el=pre.previousElementSibling;
+    let hops=0;
+    while(el && hops<4){
+      if(el.classList?.contains('file')){
+        return el.textContent.replace(/^\s*📄\s*/,'').trim();
+      }
+      if(/^H[23]$/.test(el.tagName)) break;
+      el=el.previousElementSibling;
+      hops++;
+    }
+    return prettyLanguage(lang);
+  }
+
+  function decorateCodeBlocks(){
+    document.querySelectorAll('pre:not(.mermaid):not(#sidebarProjectTree)').forEach(pre=>{
+      if(pre.closest('.code-window')) return;
+      const code=pre.querySelector(':scope > code');
+      if(!code) return;
+
+      const text=code.textContent;
+      if(text.includes('gestor-estudiantes/') || /[├└│]─/.test(text)){
+        pre.classList.add('structure-pre');
+        return;
+      }
+
+      const lang=inferCodeLanguage(code);
+      code.classList.add('language-'+lang);
+
+      const shell=document.createElement('div');
+      shell.className='code-window';
+
+      const top=document.createElement('div');
+      top.className='code-topbar';
+
+      const lights=document.createElement('span');
+      lights.className='traffic-lights';
+      lights.innerHTML='<i></i><i></i><i></i>';
+
+      const title=document.createElement('span');
+      title.className='code-title';
+      title.textContent=nearestFileName(pre,lang);
+
+      const spacer=document.createElement('span');
+      spacer.className='code-spacer';
+
+      const badge=document.createElement('span');
+      badge.className='code-language';
+      badge.textContent=prettyLanguage(lang);
+
+      const copy=pre.querySelector(':scope > .copy');
+
+      top.append(lights,title,spacer,badge);
+      if(copy) top.appendChild(copy);
+
+      pre.parentNode.insertBefore(shell,pre);
+      shell.append(top,pre);
+    });
+  }
+
   function initVisualLibraries(){
+    decorateCodeBlocks();
+
     // Iconos
     if(window.lucide) lucide.createIcons();
 
@@ -1946,11 +2176,14 @@ flowchart LR
 
     // Resaltado de sintaxis
     if(window.hljs){
-      document.querySelectorAll('pre code').forEach(code=>{
-        if(code.closest('#sidebarProjectTree')) return;
-        if(code.textContent.includes('gestor-estudiantes/')) return;
+      document.querySelectorAll('.code-window pre code').forEach(code=>{
         if(code.dataset.highlighted) return;
-        try{ hljs.highlightElement(code); }catch(e){}
+        try{
+          hljs.highlightElement(code);
+          if(typeof hljs.lineNumbersBlock === 'function'){
+            hljs.lineNumbersBlock(code,{singleLine:true});
+          }
+        }catch(e){}
       });
     }
 
